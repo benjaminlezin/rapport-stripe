@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport Stripe 2026 — Abby Customer Care</title>
+<style>
+  :root {
+    --blue-dark: #1F3864;
+    --blue-med: #2E75B6;
+    --blue-light: #D6E4F0;
+    --red: #C00000;
+    --red-bg: #FCE4D6;
+    --orange: #BF8F00;
+    --orange-bg: #FFF2CC;
+    --green: #375623;
+    --green-bg: #E2EFDA;
+    --grey: #F5F5F5;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0f4f8;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── TOP HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-med) 100%);
+    color: white;
+    padding: 40px 48px 32px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+  .hero p { font-size: 14px; opacity: 0.75; margin-top: 4px; }
+  .hero-meta { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+  .hero-stat {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .hero-stat .n { font-size: 28px; font-weight: 800; }
+  .hero-stat .l { font-size: 11px; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    background: white;
+    border-bottom: 2px solid var(--blue-light);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  nav a {
+    display: block;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav a:hover, nav a.active {
+    color: var(--blue-med);
+    border-bottom-color: var(--blue-med);
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  section { margin-bottom: 40px; }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--blue-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--blue-med);
+  }
+  .card.red { border-left-color: var(--red); }
+  .card.orange { border-left-color: var(--orange); }
+  .card.green { border-left-color: var(--green); }
+  .card .card-n { font-size: 32px; font-weight: 800; color: var(--blue-dark); }
+  .card.red .card-n { color: var(--red); }
+  .card.orange .card-n { color: var(--orange); }
+  .card .card-label { font-size: 12px; color: var(--text-light); margin-top: 4px; line-height: 1.4; }
+
+  /* ── CLUSTER BOX ── */
+  .cluster {
+    background: #fff5f5;
+    border: 2px solid var(--red);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .cluster h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cluster-items { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .cluster-item {
+    background: white;
+    border: 1px solid #f5c2c2;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  /* ── ACCORDION (bugs & CU) ── */
+  .accordion { display: flex; flex-direction: column; gap: 10px; }
+  .accordion-item {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-left: 4px solid var(--blue-med);
+  }
+  .accordion-item.severity-critique { border-left-color: var(--red); }
+  .accordion-item.severity-haute { border-left-color: #e05c00; }
+  .accordion-item.severity-moyenne { border-left-color: var(--orange); }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .accordion-header:hover { background: #f7faff; }
+
+  .accordion-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-critique { background: var(--red-bg); color: var(--red); }
+  .badge-haute { background: #fde8d8; color: #c04000; }
+  .badge-moyenne { background: var(--orange-bg); color: var(--orange); }
+  .badge-info { background: var(--blue-light); color: var(--blue-dark); }
+
+  .accordion-title {
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+    color: var(--text);
+  }
+  .accordion-meta {
+    font-size: 11px;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+  .accordion-arrow {
+    font-size: 11px;
+    color: var(--text-light);
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+  .accordion-body {
+    display: none;
+    padding: 0 18px 16px 18px;
+    border-top: 1px solid #eef0f4;
+  }
+  .accordion-item.open .accordion-body { display: block; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .meta-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--grey);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .meta-tag strong { color: var(--text); }
+
+  .desc { font-size: 13px; color: var(--text); margin-top: 10px; line-height: 1.7; }
+
+  .quote {
+    background: var(--grey);
+    border-left: 3px solid #aaa;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-style: italic;
+    font-size: 12px;
+    color: #444;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .bullets { margin: 10px 0 0 0; padding-left: 18px; }
+  .bullets li { font-size: 13px; margin-bottom: 5px; color: var(--text); }
+
+  .loom-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0f4ff;
+    border: 1px solid #c5d3f0;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--blue-med);
+    text-decoration: none;
+    margin-top: 12px;
+    transition: background .15s;
+  }
+  .loom-link:hover { background: #dce6ff; }
+
+  /* ── ACTIONS TABLE ── */
+  .actions-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    font-size: 12px;
+  }
+  .actions-table th {
+    background: var(--blue-dark);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .actions-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #eef0f4;
+    vertical-align: middle;
+  }
+  .actions-table tr:last-child td { border-bottom: none; }
+  .actions-table tr:nth-child(even) td { background: #fafbfd; }
+  .actions-table tr:hover td { background: #f0f4ff; }
+
+  .complexity {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .c-high { background: var(--red-bg); color: var(--red); }
+  .c-med { background: var(--orange-bg); color: var(--orange); }
+  .c-low { background: var(--green-bg); color: var(--green); }
+
+  .time-badge {
+    font-size: 11px;
+    color: var(--blue-med);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── PATTERNS ── */
+  .patterns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .patterns { grid-template-columns: 1fr; } }
+
+  .pattern-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .pattern-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .pattern-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .icon-red { background: var(--red-bg); color: var(--red); }
+  .icon-orange { background: var(--orange-bg); color: var(--orange); }
+  .icon-grey { background: var(--grey); color: #666; }
+  .pattern-card p { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+
+  /* ── RECO ── */
+  .reco-list { display: flex; flex-direction: column; gap: 10px; }
+  .reco-item {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .reco-n {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blue-dark);
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .reco-content { flex: 1; }
+  .reco-content h4 { font-size: 13px; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; }
+  .reco-content p { font-size: 12px; color: var(--text-light); }
+  .reco-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+  .tag-critique { background: var(--red-bg); color: var(--red); }
+  .tag-sprint { background: #e8f4fd; color: var(--blue-med); }
+  .tag-doc { background: var(--green-bg); color: var(--green); }
+
+  .notice {
+    background: var(--orange-bg);
+    border: 1px solid #e6c000;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #7a5800;
+    margin-bottom: 16px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: #aaa;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Rapport Stripe — Bugs & Difficultés</h1>
+  <p>Abby Customer Care · Analyse janvier – juin 2026 · 14 vidéos Loom analysées</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><div class="n">8</div><div class="l">Bugs documentés</div></div>
+    <div class="hero-stat"><div class="n">3</div><div class="l">Bugs critiques (cluster)</div></div>
+    <div class="hero-stat"><div class="n">7</div><div class="l">Cas d'usage complexes</div></div>
+    <div class="hero-stat"><div class="n">16+</div><div class="l">Actions manuelles care</div></div>
+    <div class="hero-stat"><div class="n">~6h</div><div class="l">Stripe / semaine (estimé)</div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#synthese" class="active">Synthèse</a>
+  <a href="#bugs-confirmes">Bugs confirmés</a>
+  <a href="#bugs-loom">Bugs Loom</a>
+  <a href="#cas-usage">Cas d'usage</a>
+  <a href="#actions">Actions manuelles</a>
+  <a href="#recommandations">Recommandations</a>
+</nav>
+
+<main>
+
+  <!-- ── SYNTHÈSE ── -->
+  <section id="synthese">
+    <div class="section-title">📊 Vue d'ensemble</div>
+
+    <div class="cards" style="margin-bottom:20px;">
+      <div class="card red">
+        <div class="card-n">3</div>
+        <div class="card-label">Bugs confirmés<br>(Slack + Loom)</div>
+      </div>
+      <div class="card red">
+        <div class="card-n">5</div>
+        <div class="card-label">Bugs Loom<br>(analyses détaillées)</div>
+      </div>
+      <div class="card red">
+        <div class="card-n">3</div>
+        <div class="card-label">Bugs dans le cluster<br>« Non Recouvrable »</div>
+      </div>
+      <div class="card orange">
+        <div class="card-n">7</div>
+        <div class="card-label">Cas d'usage complexes<br>sans documentation</div>
+      </div>
+      <div class="card">
+        <div class="card-n">16+</div>
+        <div class="card-label">Actions Stripe 100%<br>manuelles care</div>
+      </div>
+    </div>
+
+    <!-- CLUSTER -->
+    <div class="cluster">
+      <h3>🚨 Cluster critique — Statut « Non Recouvrable » inopérant</h3>
+      <p style="font-size:12px;color:#555;">Lorsqu'une facture est passée en « Non Recouvrable », ce statut n'a aucun effet technique dans 3 systèmes distincts :</p>
+      <div class="cluster-items">
+        <div class="cluster-item">🔴 Stripe — paiement toujours possible (Bug C)</div>
+        <div class="cluster-item">🔴 App Abby — facture toujours payable (Bug D)</div>
+        <div class="cluster-item">🔴 Stripe manuel — crédit fantôme possible (Bug #3)</div>
+      </div>
+    </div>
+
+    <!-- PATTERNS -->
+    <div class="patterns">
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-red">1</span>Statut « Non Recouvrable » inopérant</h4>
+        <p>3 bugs convergent : le statut est purement cosmétique. Il ne bloque ni le paiement Stripe, ni l'app Abby, ni la génération de crédit fantôme.</p>
+      </div>
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-red">2</span>Plans activés sans paiement effectif</h4>
+        <p>Bug #2 (Inova) et Bug A (Guyon) : Stripe peut activer un plan supérieur ou un doublon sans encaissement réel. Risque de perte financière non détectée.</p>
+      </div>
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-orange">3</span>Prorata sur factures non payées</h4>
+        <p>Bugs A, B, #3 : Stripe calcule les proratas sans vérifier si la facture précédente a été encaissée. Génère des crédits fictifs ou des doubles facturations.</p>
+      </div>
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-orange">4</span>Absence de garde-fous in-app</h4>
+        <p>Bug E et A : l'app Abby ne bloque pas les actions utilisateur qui entrent en conflit avec un recouvrement en cours ou un abonnement pluriannuel actif.</p>
+      </div>
+      <div class="pattern-card" style="grid-column: span 2;">
+        <h4><span class="pattern-icon icon-grey">5</span>Charge opérationnelle non scalable</h4>
+        <p>16+ actions manuelles, 20+ process non documentés, 10 bugs sur 6 mois. Le care absorbe seul la complexité que le produit n'a pas encodée. Estimation : 4–8h/semaine sur Stripe soit ~100–200h sur l'année.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BUGS CONFIRMÉS ── -->
+  <section id="bugs-confirmes">
+    <div class="section-title">🔴 Bugs Confirmés (Slack)</div>
+    <div class="accordion">
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">Bug #1 — Email CRM déclenché comme résiliation lors d'un transfert de compte</span>
+          <span class="accordion-meta">8 juin 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="meta-row">
+            <span class="meta-tag">📅 <strong>8 juin 2026</strong></span>
+            <span class="meta-tag">🔧 <strong>HubSpot CRM</strong></span>
+          </div>
+          <p class="desc">Un client disposait de 2 comptes Abby. Le care a supprimé l'abonnement Business du compte A pour le transférer sur le compte B. HubSpot a interprété cette suppression comme une résiliation réelle et a envoyé un email de résiliation à la cliente.</p>
+          <ul class="bullets">
+            <li>Le CRM ne distingue pas résiliation définitive et transfert interne</li>
+            <li>Il n'existe pas de mécanisme « transfert » côté produit — le care doit supprimer/recréer manuellement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CRITIQUE</span>
+          <span class="accordion-title">Bug #2 — Accès au plan Business sans paiement après tentatives multiples</span>
+          <span class="accordion-meta">28 avr. 2026 · Inova Studios</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="meta-row">
+            <span class="meta-tag">📅 <strong>28 avril 2026</strong></span>
+            <span class="meta-tag">💶 <strong>279,67 € encaissés à 0 €</strong></span>
+          </div>
+          <p class="desc">Après 7 tentatives de paiement infructueuses, le client est passé sur Business avec un solde créditeur de 94,89 € et 0 € encaissé. Stripe a activé le plan supérieur sans contrôle effectif du paiement.</p>
+          <div class="quote">« Il se retrouve avec un solde créditeur. Concrètement, il n'a rien payé cet utilisateur, mais il est bien passé sur Business. »</div>
+          <a href="https://www.loom.com/share/8ec9bdeafa3e408097ce95d67b155499" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CRITIQUE</span>
+          <span class="accordion-title">Bug #3 — Facture manuelle non payée comptabilisée comme crédit par Stripe</span>
+          <span class="accordion-meta">19 mars 2026 · Atoutbois</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="meta-row">
+            <span class="meta-tag">📅 <strong>19 mars 2026</strong></span>
+            <span class="meta-tag">💶 <strong>216 € — crédit fantôme</strong></span>
+          </div>
+          <p class="desc">Benjamin crée une facture manuelle de 216 € pour réactiver un client. Le client refuse et souscrit directement un Start via l'app. Stripe interprète la facture de 216 € (jamais payée) comme un avoir et le déduit du nouveau Start.</p>
+          <div class="quote">« Ça déduit automatiquement l'abonnement non utilisé, sauf qu'elle n'a jamais été payée. »</div>
+          <ul class="bullets">
+            <li>Comportement silencieux — impossible à détecter sans audit des soldes créditeurs</li>
+            <li>Tout envoi de facture manuelle sans suivi peut générer un crédit fantôme</li>
+          </ul>
+          <a href="https://www.loom.com/share/f68c2e7be140498aa7a7523819917459" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── BUGS LOOM ── -->
+  <section id="bugs-loom">
+    <div class="section-title">📹 Bugs Documentés via Loom</div>
+    <div class="accordion">
+
+      <div class="accordion-item severity-haute">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🔴 HAUTE</span>
+          <span class="accordion-title">Bug A — Re-souscription annuel sur abonnement biannuel actif</span>
+          <span class="accordion-meta">20 mars 2026 · Guyon</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Client avec un Bi-Pro 2 ans actif souscrit lui-même un nouvel abonnement annuel in-app. Stripe génère une facture doublon à 44,28 € avec prorata. L'app n'aurait pas dû autoriser cette souscription.</p>
+          <div class="quote">« In-app normalement on peut seulement upgrader, tu ne peux pas te réengager sur un abonnement que tu as déjà en cours. »</div>
+          <a href="https://www.loom.com/share/c0eb9d27e4e6437ca65df321504b0830" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">Bug B — Upgrade vers Business avec facture de renouvellement Pro ouverte non payée</span>
+          <span class="accordion-meta">25 mars 2026 · MBAM</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Une facture Pro ouverte (non payée) existe le 21 mars. Le 22 mars, la cliente upgrade. Stripe calcule un prorata de 215,35 € en déduisant le Pro non encore payé. La cliente a maintenant 2 factures simultanées.</p>
+          <div class="quote">« Si elle churne maintenant, elle devra payer ce montant. »</div>
+          <a href="https://www.loom.com/share/0516ee58686b4786b6668f531d1394e7" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CLUSTER</span>
+          <span class="accordion-title">Bug C — Paiement d'une facture « Non Recouvrable » toujours possible dans Stripe</span>
+          <span class="accordion-meta">3 avr. 2026 · Lilian Le Mée</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Facture passée automatiquement en « Non Recouvrable » le 19 février après échecs de prélèvement. Le 2 avril (6 semaines plus tard), le client parvient à payer la facture. Stripe l'accepte.</p>
+          <div class="quote">« J'avais jamais vu encore ce cas de figure. »</div>
+          <ul class="bullets">
+            <li>Le statut « Non Recouvrable » est purement informatif — pas de blocage technique dans Stripe</li>
+          </ul>
+          <a href="https://www.loom.com/share/5f355b75cf0045638dc0b847a06e14cd" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CLUSTER</span>
+          <span class="accordion-title">Bug D — Facture « Non Recouvrable » encore payable dans l'app Abby</span>
+          <span class="accordion-meta">7 avr. 2026 · Waugoh Ouerega</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Abonnement annulé + facture passée en Non Recouvrable par le care. Dans l'app Abby (Paramètres → Paiement → Voir mes factures), la facture apparaît toujours « En retard » et le client peut saisir sa CB pour payer.</p>
+          <div class="quote">« Elle a toujours la possibilité de régler sa facture. »</div>
+          <ul class="bullets">
+            <li>Le statut Stripe n'est pas synchronisé dans l'app — le client peut s'auto-réactiver involontairement</li>
+          </ul>
+          <a href="https://www.loom.com/share/d22af5f878a84a02bdba0b7a23d37585" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">Bug E — Double abonnement actif lors d'un churn pendant recouvrement</span>
+          <span class="accordion-meta">8 avr. 2026 · Inova Studios</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Facture de renouvellement Pro Plus CE en cours de prélèvement (12 mars). Le 23 mars, le client souscrit un Bi-Start. 2 abonnements actifs en parallèle pendant 2 semaines. La facture Pro est finalement prélevée le 6 avril.</p>
+          <div class="quote">« On a deux abonnements : 1 pour le renouvellement dont la facture a été éditée le 12 mars mais prélevé le 6 avril, et entre temps le 23 mars il a souhaité churner. »</div>
+          <a href="https://www.loom.com/share/01fe697ff9b14f25b30f30666054e21f" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CAS D'USAGE ── -->
+  <section id="cas-usage">
+    <div class="section-title">🟡 Cas d'Usage Complexes</div>
+    <div class="accordion">
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🔴 HAUTE</span>
+          <span class="accordion-title">CU #1 — Remboursement 14 jours promis par l'IA → 2 avis 1 étoile</span>
+          <span class="accordion-meta">27 avr. 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">L'IA FIN a répondu à un client qu'il serait remboursé sous 14 jours. Or le remboursement nécessite une action manuelle care. Le client a attendu, puis laissé un avis 1 étoile sur Google ET Trustpilot.</p>
+          <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/conversation/215473550038319?view=List" target="_blank" class="loom-link">💬 Voir la conversation Intercom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">CU #2 — Downgrade annuel → mensuel créant 4 mois sans prélèvement</span>
+          <span class="accordion-meta">25 mars 2026 · Laurie Audibert</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Client Start annuel (103 €) upgrade vers Pro mensuel. Stripe génère un avoir de 85 € qui couvre 4 mensualités Pro. Pendant 4 mois, 0 € prélevé.</p>
+          <div class="quote">« Ça lui crée un solde créditeur de 85 euros. Le client il a payé 103 euros, pendant 4 mois on ne le prélèvera pas. »</div>
+          <a href="https://www.loom.com/share/d3c5eb7e6b1845b0b8735d9df1f89739" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">CU #3 — Série Intercom bloquée : filtre « ET » impossible avec condition « OU »</span>
+          <span class="accordion-meta">22 mai 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Impossible de configurer une série ciblant (Business OU Pro OU Start) ET (statut = past_due). Intercom force un « ET » global incompatible avec la combinaison souhaitée.</p>
+          <div class="quote">« J'arrive pas à mettre « ET ». Sur Stripe ce n'est pas difficile. »</div>
+          <a href="https://www.loom.com/share/8a3609f8dbb94a4994af8774f9485e25" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">CU #4 — Réactivation churner avec code promo (facture brouillon à envoyer)</span>
+          <span class="accordion-meta">L'Orange Carré — nov. 2025</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Créer un abonnement avec code promo génère une facture brouillon qui doit être envoyée manuellement. Si elle reste en brouillon, l'abonnement s'active mais le paiement ne part pas (lié au Bug #3).</p>
+          <a href="https://www.loom.com/share/05e8ff0f4a4d4235a8d749f38b324720" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🔴 HAUTE</span>
+          <span class="accordion-title">CU #5 — Période d'Essai Business imposée à l'onboarding → avis 1 étoile</span>
+          <span class="accordion-meta">20 mars 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Un utilisateur choisissant la version gratuite se retrouve avec une PE Business à la fin de l'onboarding. Une cliente s'est sentie trompée et a laissé un avis 1 étoile Google.</p>
+          <div class="quote">« Si on veut accueillir des users pas à l'aise avec le digital, on a tout intérêt à être le plus transparent possible. »</div>
+          <a href="https://app.intercom.com/a/apps/hu6d8oic/settings/helpdesk/macros" target="_blank" class="loom-link">⚙️ Macro Intercom — Stopper la période d'essai</a>
+          <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/admin/6794798/conversation/215473616091566?view=List" target="_blank" class="loom-link" style="margin-left:12px">💬 Cas similaire Intercom</a>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">CU #6 — Renew avec code promo : 3 procédures distinctes selon le statut</span>
+          <span class="accordion-meta">Steeve Villez — nov. 2025</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <ul class="bullets">
+            <li><strong>Abo annulé :</strong> recréer un abonnement depuis zéro avec le code promo</li>
+            <li><strong>Facture en retard :</strong> appliquer la promo sans générer de doublon</li>
+            <li><strong>Statut « Ouverte » :</strong> appliquer la promo sur la facture existante</li>
+          </ul>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+            <a href="https://www.loom.com/share/a074b5ddcf144c47bd387cde209a3694" target="_blank" class="loom-link">🎥 Sous-cas 1</a>
+            <a href="https://www.loom.com/share/b845fc6cee614d869202a42328678582" target="_blank" class="loom-link">🎥 Sous-cas 2</a>
+            <a href="https://www.loom.com/share/245a53ef5e7a436788b19348657ec331" target="_blank" class="loom-link">🎥 Sous-cas 3</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-moyenne">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
+          <span class="accordion-title">CU #7 — Conversion abonnement annuel → pluriannuel (non documenté)</span>
+          <span class="accordion-meta">Guillaume Raballand — nov. 2025</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Ajouter le produit 3 ans + supprimer l'annuel + réinitialiser le cycle + appliquer le prorata + débiter directement. Ce process repose entièrement sur la mémoire de Benjamin.</p>
+          <div class="quote">« On rajoute le produit 3 ans, je supprime l'abonnement annuel, je réinitialise le cycle. »</div>
+          <a href="https://www.loom.com/share/6715b0ce2f994bd2b81241774f4110b2" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ACTIONS MANUELLES ── -->
+  <section id="actions">
+    <div class="section-title">⚙️ Actions Manuelles Récurrentes</div>
+    <div class="notice">⏱ Temps estimés d'après la complexité observée dans les Looms. Un suivi time-tracking est recommandé pour valider ces données au COMEX.</div>
+    <table class="actions-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Action Stripe manuelle</th>
+          <th>Complexité</th>
+          <th>Temps estimé</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Souscription avec code promo via lien</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">15–25 min</td></tr>
+        <tr><td>2</td><td>Upgrade / Upsell (24 combinaisons)</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">20–40 min</td></tr>
+        <tr><td>3</td><td>Downgrade</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">20–35 min</td></tr>
+        <tr><td>4</td><td>Changement de fractionnement mensuel ↔ annuel</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">20–35 min</td></tr>
+        <tr><td>5</td><td>Solde créditeur parrainage</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">10–15 min</td></tr>
+        <tr><td>6</td><td>Annuler un abonnement (3 sous-cas)</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">10–20 min</td></tr>
+        <tr><td>7</td><td>Remboursement</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">20–45 min</td></tr>
+        <tr><td>8</td><td>Passage en « Non Recouvrable »</td><td><span class="complexity c-high" style="background:#fce4d6;color:#c00000;">🔴 Critique</span></td><td class="time-badge">30–60 min*</td></tr>
+        <tr><td>9</td><td>Envoi de facture manuelle</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">15–30 min</td></tr>
+        <tr><td>10</td><td>Geste commercial : mois offerts</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">10–20 min</td></tr>
+        <tr><td>11</td><td>Renew avec code promo (3 sous-cas)</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">25–45 min</td></tr>
+        <tr><td>12</td><td>Ajout crédit Stripe</td><td><span class="complexity c-low">Faible</span></td><td class="time-badge">5–10 min</td></tr>
+        <tr><td>13</td><td>Suppression compte Stripe lié à Abby</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">10–15 min</td></tr>
+        <tr><td>14</td><td>Gestion taux TVA réduits</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">15–20 min</td></tr>
+        <tr><td>15</td><td>Mise en pause abonnement</td><td><span class="complexity c-med">Moyen</span></td><td class="time-badge">10–15 min</td></tr>
+        <tr><td>16</td><td>Conversion abonnement annuel → multi-années</td><td><span class="complexity c-high">Élevé</span></td><td class="time-badge">30–50 min</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:#888;margin-top:8px;">* Action #8 : le temps inclut la gestion des conséquences (app Abby non synchronisée, contacts client de suivi).</p>
+  </section>
+
+  <!-- ── RECOMMANDATIONS ── -->
+  <section id="recommandations">
+    <div class="section-title">✅ Recommandations Prioritaires</div>
+    <div class="reco-list">
+
+      <div class="reco-item">
+        <div class="reco-n">1</div>
+        <div class="reco-content">
+          <h4>Corriger le statut « Non Recouvrable » end-to-end</h4>
+          <p>Bloquer techniquement le paiement dans Stripe · Synchroniser le statut dans l'app Abby · 3 bugs corrigés d'un coup</p>
+        </div>
+        <span class="reco-tag tag-critique">🔴 CRITIQUE</span>
+      </div>
+
+      <div class="reco-item">
+        <div class="reco-n">2</div>
+        <div class="reco-content">
+          <h4>Bloquer l'activation d'un plan supérieur sans paiement validé</h4>
+          <p>Imposer un contrôle Stripe : upgrade uniquement si la facture courante est payée · Bloquer la souscription si un abonnement actif existe déjà</p>
+        </div>
+        <span class="reco-tag tag-sprint">Sprint 1</span>
+      </div>
+
+      <div class="reco-item">
+        <div class="reco-n">3</div>
+        <div class="reco-content">
+          <h4>Bloquer le downgrade de fréquence annuel → mensuel in-app</h4>
+          <p>Empêcher la réduction de fréquence en self-service pour éviter la génération de crédits involontaires · Orienter vers le care</p>
+        </div>
+        <span class="reco-tag tag-sprint">Sprint 1</span>
+      </div>
+
+      <div class="reco-item">
+        <div class="reco-n">4</div>
+        <div class="reco-content">
+          <h4>Aligner l'IA FIN sur les process Stripe réels</h4>
+          <p>Mettre à jour la base de connaissance : délai réel de remboursement, conditions de résiliation · Éviter de nouveaux avis négatifs</p>
+        </div>
+        <span class="reco-tag tag-sprint">Sprint 2</span>
+      </div>
+
+      <div class="reco-item">
+        <div class="reco-n">5</div>
+        <div class="reco-content">
+          <h4>Documenter les 13 process prioritaires Stripe</h4>
+          <p>Transformer les 14 Looms en SOPs Notion · Priorité : renew avec promo, upgrade/downgrade, remboursement, changement fréquence · Délai : 1 sprint</p>
+        </div>
+        <span class="reco-tag tag-doc">📋 Doc</span>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>Rapport Stripe — Bugs &amp; Difficultés 2026 · Abby Customer Care · Benjamin Lézin &amp; Rindra Da Torre · Basé sur 14 transcripts Loom + analyse Slack</footer>
+
+<script>
+  function toggle(header) {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // Nav active state on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Open first item in each section by default
+  document.querySelectorAll('.accordion').forEach(acc => {
+    const first = acc.querySelector('.accordion-item');
+    if (first) first.classList.add('open');
+  });
+</script>
+
+</body>
+</html>
