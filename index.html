@@ -403,6 +403,7 @@
   }
   .conv-item.slack { border-left-color: #4a154b; }
   .conv-item.intercom { border-left-color: #1e6dd8; }
+  .conv-item.loom { border-left-color: #ff4e00; background: #fff8f5; }
   .conv-item.data { border-left-color: var(--green); background: #f5fff5; }
   .conv-meta {
     display: flex;
@@ -420,6 +421,7 @@
   }
   .conv-source.slack { background: #f0e8f5; color: #4a154b; }
   .conv-source.intercom { background: #e8f0fd; color: #1e6dd8; }
+  .conv-source.loom { background: #ffeee8; color: #c73800; }
   .conv-name { font-size: 11px; font-weight: 600; color: var(--text); }
   .conv-date { font-size: 10px; color: var(--text-light); }
   .conv-text { font-size: 12px; color: #333; line-height: 1.6; font-style: italic; }
@@ -725,6 +727,12 @@
           <a href="https://www.loom.com/share/d3c5eb7e6b1845b0b8735d9df1f89739" target="_blank" class="loom-link">🎥 Voir le Loom</a>
           <div class="conv-section">
             <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">25 mars 2026 · 1 min 28 sec</span></div>
+              <div class="conv-text">« Je te fais un nouveau Loom. On a un utilisateur qui a souscrit en Start annuel et qui a voulu upgrade sur Pro mais du coup il est passé en mensuel. Ça lui crée une facture avec un solde créditeur de 85 euros — pendant 4 mois on ne le prélèvera pas. »</div>
+              <div class="conv-action">→ Question posée&nbsp;: ne vaudrait-il pas mieux orienter in-app un user déjà en annuel vers de l'annuel plutôt que de permettre le passage en mensuel avec création d'un crédit&nbsp;?</div>
+              <a href="https://www.loom.com/share/d3c5eb7e6b1845b0b8735d9df1f89739" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
             <div class="conv-item slack">
               <div class="conv-meta"><span class="conv-source slack">Slack DM</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">25 mars 2026</span></div>
               <div class="conv-text">« tant qu'on est sur le sujet Stripe, je te partage un autre cas, où in-app ça serait bien d'interdire ce genre de comportement. On permet l'upgrade annuel &gt; mensuel où ça crée un solde créditeur en faveur du client — pourquoi ne pas le "contraindre" à rester en annuel ? Et s'il veut du mensuel, il vient à nous au support pour qu'on fasse la modif si besoin. »</div>
@@ -746,6 +754,12 @@
           <a href="https://www.loom.com/share/8a3609f8dbb94a4994af8774f9485e25" target="_blank" class="loom-link">🎥 Voir le Loom</a>
           <div class="conv-section">
             <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">22 mai 2026 · 1 min 2 sec</span></div>
+              <div class="conv-text">« Je te fais un petit Loom pour compléter mon écrit. La série cible les retards de paiement Stripe — j'avais uniquement ciblé Start et Business, je veux aussi cibler les Pro. Ma difficulté&nbsp;: le statut Stripe c'est "past_due", j'aimerais mettre ET, mais si je mets ET, il me le rejette. Il faudrait que ce soit "OU" sur les plans et ET sur le dernier critère. »</div>
+              <div class="conv-action">→ Problème&nbsp;: impossible de combiner (Plan Business OU Plan Start OU Plan Pro) ET (stripe_subscription_status = past_due) dans une même règle Intercom.</div>
+              <a href="https://www.loom.com/share/8a3609f8dbb94a4994af8774f9485e25" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
             <div class="conv-item slack">
               <div class="conv-meta"><span class="conv-source slack">Slack DM</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">22 mai 2026</span></div>
               <div class="conv-text">« je suis bloqué sur intercom pour l'une de mes séries que je veux modifier — je me suis rendu compte qu'étaient ciblés que les Start et Business qui étaient en retard de paiement sur Stripe, je veux rajouter les Pro, sauf que "stripe_subscription_statut is past_due" a le variable "ou" et non "et". Comment je peux le changer ça ? »</div>
@@ -765,6 +779,15 @@
         <div class="accordion-body">
           <p class="desc">Créer un abonnement avec code promo génère une facture brouillon qui doit être envoyée manuellement. Si elle reste en brouillon, l'abonnement s'active mais le paiement ne part pas (lié au Bug #3).</p>
           <a href="https://www.loom.com/share/05e8ff0f4a4d4235a8d749f38b324720" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">3 nov. 2025 · 1 min 46 sec · L'Orange Carré</span></div>
+              <div class="conv-text">« Je montre la manip pour réactiver une cliente qui avait churné et souhaite revenir avec la même promo que l'an dernier (45% de réduction = 261,36 €). Il suffit de connaître la promo, l'appliquer, créer l'abonnement — ça génère une facture en brouillon. Je la finalise et mets le lien de la facture dans la conversation pour que la cliente puisse régler directement. »</div>
+              <div class="conv-action">→ Risque&nbsp;: si la facture brouillon n'est pas envoyée manuellement, l'abonnement s'active sans prélèvement.</div>
+              <a href="https://www.loom.com/share/05e8ff0f4a4d4235a8d749f38b324720" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -819,6 +842,23 @@
           </div>
           <div class="conv-section">
             <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom SC1</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">3 nov. 2025 · 1 min 12 sec · Mister Dan (abo annulé)</span></div>
+              <div class="conv-text">« Appliquer une promo à un renouvellement — l'utilisateur avait prévu d'annuler son abo. On ne l'annule pas, on le réactive et on applique la promo (code "extra cinquante", −50%). Le client sera débité de 90€ le 20 novembre. »</div>
+              <div class="conv-action">→ Procédure&nbsp;: ne pas annuler → réactiver → mettre à jour l'abonnement avec code promo → confirmer.</div>
+              <a href="https://www.loom.com/share/a074b5ddcf144c47bd387cde209a3694" target="_blank" class="conv-link">🎥 Voir le Loom SC1 complet</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom SC2</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">3 nov. 2025 · 2 min 4 sec · Steeve Villez (facture en retard)</span></div>
+              <div class="conv-text">« Facture en retard (475€) → passage en non-recouvrable → mise en place du renouvellement avec −20%. Réinitialisation du cycle de facturation → nouvelle facture envoyée au client pour 380€. Il reste une dernière manip : envoyer la facture et notifier le client sur 5 jours. »</div>
+              <div class="conv-action">→ Procédure&nbsp;: marquer en non-recouvrable → appliquer code promo → réinitialiser cycle → envoyer facture manuellement.</div>
+              <a href="https://www.loom.com/share/b845fc6cee614d869202a42328678582" target="_blank" class="conv-link">🎥 Voir le Loom SC2 complet</a>
+            </div>
+            <div class="conv-item loom" style="opacity:0.6;">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom SC3</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">3 nov. 2025 · Richy Severine (statut "Ouverte")</span></div>
+              <div class="conv-text" style="font-style:normal;font-size:11px;color:#888;">⚠️ Transcript non disponible pour ce Loom. La vidéo montre la procédure pour un abonnement annuel Business avec facture ouverte (216€ incomplète).</div>
+              <a href="https://www.loom.com/share/245a53ef5e7a436788b19348657ec331" target="_blank" class="conv-link">🎥 Voir le Loom SC3</a>
+            </div>
             <div class="conv-item slack">
               <div class="conv-meta"><span class="conv-source slack">Slack</span><span class="conv-name">Benjamin Lézin → Corentin Allemand & Benjamin Gardien</span><span class="conv-date">9 fév. 2026</span></div>
               <div class="conv-text">« la cliente a été "frustrée" de ne pas pouvoir bénéficier du code promo partagé lors du webinaire. Il serait peut-être judicieux de préciser lorsque vous partagez un code promo, qu'il n'est pas valable pour un renew, mais uniquement pour un passage d'un abonnement mensuel à annuel ou une offre supérieure. »</div>
@@ -844,6 +884,15 @@
           <p class="desc">Ajouter le produit 3 ans + supprimer l'annuel + réinitialiser le cycle + appliquer le prorata + débiter directement. Ce process repose entièrement sur la mémoire de Benjamin.</p>
           <div class="quote">« On rajoute le produit 3 ans, je supprime l'abonnement annuel, je réinitialise le cycle. »</div>
           <a href="https://www.loom.com/share/6715b0ce2f994bd2b81241774f4110b2" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">5 nov. 2025 · 42 sec · Guillaume Raballand</span></div>
+              <div class="conv-text">« Je montre comment modifier un abonnement annuel en plusieurs années — le client souhaite basculer sur une offre 3 ans Start. On ajoute le produit 3 ans, on supprime l'annuel, on réinitialise le cycle (il devait renouveler en juillet 2026). Modifications au prorata, débit immédiat sur carte enregistrée, prochain renouvellement en 2028. »</div>
+              <div class="conv-action">→ Risque&nbsp;: process entièrement mémorisé par Benjamin, aucune SOP documentée — toute erreur de prorata ou de réinitialisation peut créer une double facturation.</div>
+              <a href="https://www.loom.com/share/6715b0ce2f994bd2b81241774f4110b2" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
