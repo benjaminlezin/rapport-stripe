@@ -553,6 +553,14 @@
             <li>Le CRM ne distingue pas résiliation définitive et transfert interne</li>
             <li>Il n'existe pas de mécanisme « transfert » côté produit — le care doit supprimer/recréer manuellement</li>
           </ul>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">8 juin 2026</span></div>
+              <div class="conv-text">« encore une dinguerie sur Stripe (je le ferai remonter dans notre projet Stripe)... abonnement souscrit en mars mais annulé solo en mai... le mail qu'elle a reçu depuis hello@abby.fr en lien avec le new CRM »</div>
+              <div class="conv-action">→ Après vérification : « je viens de rechecker, en fait cette cliente a 2 comptes et c'est moi qui ai supprimé l'abonnement Business sur le 1er et transféré sur celui où elle a ses données — donc c'est pour ça qu'elle a reçu le mail sans qu'on fasse la distinction qu'il s'agit en fait d'un transfert d'un compte A vers un compte B »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1780924090136639" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -571,6 +579,19 @@
           <p class="desc">Après 7 tentatives de paiement infructueuses, le client est passé sur Business avec un solde créditeur de 94,89 € et 0 € encaissé. Stripe a activé le plan supérieur sans contrôle effectif du paiement.</p>
           <div class="quote">« Il se retrouve avec un solde créditeur. Concrètement, il n'a rien payé cet utilisateur, mais il est bien passé sur Business. »</div>
           <a href="https://www.loom.com/share/8ec9bdeafa3e408097ce95d67b155499" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">28 avr. 2026</span></div>
+              <div class="conv-text">« encore un use case Stripe que je t'avais déjà fait remonter, mais là l'user il a fait 12 tentatives de paiement en 2 jours = l'ENFER ! ça a fini par lui activer un abo Business annuel, mais sans payer du coup 😕 son paiement de 279,67€ est en échec, donc je lui renvoie le link Stripe pour qu'il puisse régulariser cette facture »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1775481098945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">28 avr. 2026 · 1 min 25 sec</span></div>
+              <div class="conv-text">« Via cette vidéo, je remonte un cas Stripe que j'avais déjà constaté, mais là le client s'est vraiment acharné. Il était en Pro, a voulu upgrader sur Business le 26 avril — montant prorata calculé, mais il n'a pas réussi à finaliser. Il a fait 3, 6, 7, 7 tentatives de paiement. Il a fini par réactiver un Business avec seulement 95,04€. Résultat des courses : concrètement il n'a rien payé, mais il est bien passé sur Business annuel. Je vais lui renvoyer une nouvelle facture de 269,67€ qui était la facture initiale, car son abonnement s'est activé à tort et sans règlement. »</div>
+              <div class="conv-action">→ Bug critique : Stripe active le plan supérieur sans vérifier le paiement effectif, même après 7 tentatives échouées</div>
+              <a href="https://www.loom.com/share/8ec9bdeafa3e408097ce95d67b155499" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -593,6 +614,19 @@
             <li>Tout envoi de facture manuelle sans suivi peut générer un crédit fantôme</li>
           </ul>
           <a href="https://www.loom.com/share/f68c2e7be140498aa7a7523819917459" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">19 mars 2026</span></div>
+              <div class="conv-text">« Coucou 😊 je voulais te parler d'un use case particulier sur Stripe que je viens de constater. Je t'explique via ce loom. Est-ce que tu peux faire remonter à Nico tu penses ? »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1742379158945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">19 mars 2026 · 2 min 31 sec</span></div>
+              <div class="conv-text">« Le client avait un abonnement Pro depuis mars 2025, l'a résigné et voulait le réactiver. Je lui ai créé une facture de 216€ le 17 mars. Il a contesté le montant et a souscrit directement un Start depuis l'app. Quand il souscrit le Start, le système prend en compte ma facture de 216€ (jamais payée) et la déduit automatiquement. Il rentre son code promo — résultat : un crédit de 52€ en sa faveur alors qu'il n'a rien payé. C'est une faille : le client ne paye rien et se retrouve avec un solde positif. En plus, il a ensuite manipulé lui-même pour passer sur Pro puis Start, créant tout un bordel. Concrètement il est sur Start à 11,89€/an au lieu du plein tarif, sans avoir payé la facture initiale. »</div>
+              <div class="conv-action">→ Toute facture manuelle non suivie peut générer un crédit fantôme utilisable immédiatement</div>
+              <a href="https://www.loom.com/share/f68c2e7be140498aa7a7523819917459" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -615,6 +649,19 @@
           <p class="desc">Client avec un Bi-Pro 2 ans actif souscrit lui-même un nouvel abonnement annuel in-app. Stripe génère une facture doublon à 44,28 € avec prorata. L'app n'aurait pas dû autoriser cette souscription.</p>
           <div class="quote">« In-app normalement on peut seulement upgrader, tu ne peux pas te réengager sur un abonnement que tu as déjà en cours. »</div>
           <a href="https://www.loom.com/share/c0eb9d27e4e6437ca65df321504b0830" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">20 mars 2026</span></div>
+              <div class="conv-text">« Coucou, du coup voici l'autre cas chelou 👉 [Loom entreprise Guyon] »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1742476830945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">20 mars 2026 · 1 min 19 sec</span></div>
+              <div class="conv-text">« Le client a pris un abonnement biannuel 2 ans le 26 mars dernier — son abonnement va donc jusqu'au 26 mars 2027. Entre temps il nous écrit pour passer en mensuel, et de lui-même il a voulu reprendre un abonnement annuel. Je ne vois pas comment c'est possible in-app, normalement on peut seulement upgrader, tu ne peux pas te réengager sur un abonnement déjà en cours. Stripe a déduit ce qu'il avait payé en prorata et généré une facture de 44,28€ pour un nouvel engagement annuel — alors qu'il est déjà engagé jusqu'en 2027. Je vais annuler cette facture et lui expliquer qu'il n'a pas besoin de régler puisqu'il est engagé jusqu'en 2027. »</div>
+              <div class="conv-action">→ L'app n'empêche pas la re-souscription sur un abonnement biannuel actif — faille d'autorisation côté Stripe/produit</div>
+              <a href="https://www.loom.com/share/c0eb9d27e4e6437ca65df321504b0830" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -629,6 +676,19 @@
           <p class="desc">Une facture Pro ouverte (non payée) existe le 21 mars. Le 22 mars, la cliente upgrade. Stripe calcule un prorata de 215,35 € en déduisant le Pro non encore payé. La cliente a maintenant 2 factures simultanées.</p>
           <div class="quote">« Si elle churne maintenant, elle devra payer ce montant. »</div>
           <a href="https://www.loom.com/share/0516ee58686b4786b6668f531d1394e7" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">25 mars 2026</span></div>
+              <div class="conv-text">« Coucou ça va ? 😊 je te refais un loom sur encore un comportement chelou sur Stripe, si tu peux regarder avec Nico stp si c'est "normal" ? »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1742905200945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">25 mars 2026 · 1 min 45 sec</span></div>
+              <div class="conv-text">« J'ai une cliente en renouvellement Pro. Le 21 mars, une nouvelle facture de renouvellement est créée — ouverte, pas encore réglée. Le 22 mars, elle upgrade sur Business. Stripe la bascule directement sur Business active avec deux factures en parallèle. Ce qui me dérange : la nouvelle facture Business de 215,35€ déduit automatiquement ce qu'elle aurait réglé pour le Pro, comme si elle avait déjà payé son renouvellement — mais non. Pour moi si elle règle la Business, la facture Pro de 216€ passe à la trappe. C'est logique qu'elle ait deux factures, mais le comportement est bizarre. »</div>
+              <div class="conv-action">→ L'upgrade alors qu'une facture de renouvellement est ouverte génère un prorata qui efface la facture précédente sans l'avoir encaissée</div>
+              <a href="https://www.loom.com/share/0516ee58686b4786b6668f531d1394e7" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -646,6 +706,19 @@
             <li>Le statut « Non Recouvrable » est purement informatif — pas de blocage technique dans Stripe</li>
           </ul>
           <a href="https://www.loom.com/share/5f355b75cf0045638dc0b847a06e14cd" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">3 avr. 2026</span></div>
+              <div class="conv-text">« Coucou 😊 encore un bug relevé sur Stripe, je t'explique via un loom (plus simple) : [Loom LILIAN LE MEE] »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1775204568945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">3 avr. 2026 · 1 min 48 sec</span></div>
+              <div class="conv-text">« J'avais encore jamais vu ce comportement. Il y a une facture éditée le 22 janvier, payée le 2 avril. Mais ce qui est très bizarre : son abonnement est annulé depuis le 19 février. La facture a été signalée non recouvrable le 19 février — et malgré tout, le 2 avril, il a pu payer la facture quelques mois plus tard alors qu'il était en retard. In-app on voit un abonnement Start actif alors que dans Stripe l'abonnement est annulé. Le statut "Non Recouvrable" ne bloque pas techniquement le paiement — c'est juste informatif. »</div>
+              <div class="conv-action">→ Le statut « Non Recouvrable » dans Stripe est purement informatif : le client peut toujours payer, ce qui peut réactiver involontairement son compte</div>
+              <a href="https://www.loom.com/share/5f355b75cf0045638dc0b847a06e14cd" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -663,6 +736,19 @@
             <li>Le statut Stripe n'est pas synchronisé dans l'app — le client peut s'auto-réactiver involontairement</li>
           </ul>
           <a href="https://www.loom.com/share/d22af5f878a84a02bdba0b7a23d37585" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">7 avr. 2026</span></div>
+              <div class="conv-text">« ree, encore un comportement chelou sur Stripe, je t'explique : [Loom WAUGOH OUEREGA] — j'avais zappé d'en reparler ce matin à la weekly, savoir si t'avais des news côté Nicolas/Benjamin »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1775569572483579" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">7 avr. 2026 · 56 sec</span></div>
+              <div class="conv-text">« Son abonnement est bien annulé, j'ai passé la facture en Non Recouvrable aujourd'hui parce que la cliente se fait churn. Mais concrètement, depuis les Paramètres → Paiement → voir mes factures, elle a toujours la possibilité de régler sa facture. La facture apparaît "en retard" et elle peut encore saisir sa carte et régler. Son abonnement est bien annulé mais le statut Stripe n'est pas synchronisé — il ne devrait pas y avoir ce comportement. »</div>
+              <div class="conv-action">→ Le statut « Non Recouvrable » dans Stripe n'est pas répercuté dans l'app Abby : la page de paiement reste accessible et le client peut encore payer</div>
+              <a href="https://www.loom.com/share/d22af5f878a84a02bdba0b7a23d37585" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -677,6 +763,19 @@
           <p class="desc">Facture de renouvellement Pro Plus CE en cours de prélèvement (12 mars). Le 23 mars, le client souscrit un Bi-Start. 2 abonnements actifs en parallèle pendant 2 semaines. La facture Pro est finalement prélevée le 6 avril.</p>
           <div class="quote">« On a deux abonnements : 1 pour le renouvellement dont la facture a été éditée le 12 mars mais prélevé le 6 avril, et entre temps le 23 mars il a souhaité churner. »</div>
           <a href="https://www.loom.com/share/01fe697ff9b14f25b30f30666054e21f" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-item slack">
+              <div class="conv-meta"><span class="conv-source slack">💬 Slack</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">8 avr. 2026</span></div>
+              <div class="conv-text">« déso, encore un use case chelou sur Stripe : [Loom Inova Studios] »</div>
+              <a href="https://delia-solutions.slack.com/archives/D0606MD23CM/p1775640800945269" target="_blank" class="conv-link">🔗 Voir la conversation Slack</a>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">8 avr. 2026 · 2 min 7 sec</span></div>
+              <div class="conv-text">« Nouveau truc bizarre sur Stripe. Un utilisateur a souscrit Pro Plus CE le 12 mars 2025 à 220,80€ avec 20% de remise. Son abonnement se renouvelle automatiquement le 12 mars — la facture a été prélevée le 6 avril après plusieurs appels. Mais entre temps, le 23 mars, il a souhaité churner et souscrit un Bi-Start. Du coup on a deux clients souscrits à Bistart le 23 mars — ça veut dire deux abonnements actifs en parallèle : 1 pour le renouvellement Pro CE (facture du 12 mars prélevée le 6 avril) et 1 pour le Bi-Start souscrit le 23 mars. Il peut réclamer le remboursement des 264€ prélevés après son souhait de churner. Je vais jouer sur le fait qu'il était en cours de renouvellement. J'espère que ça s'est clair — désolé pour ces remontées complexes sur Stripe. »</div>
+              <div class="conv-action">→ L'absence de gel du renouvellement pendant la période de churn crée 2 abonnements actifs simultanément — le client a été prélevé 25 jours après avoir voulu churner</div>
+              <a href="https://www.loom.com/share/01fe697ff9b14f25b30f30666054e21f" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
         </div>
       </div>
 
