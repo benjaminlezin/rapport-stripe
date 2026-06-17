@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPECS Stripe — Procédures Manuelles Abby Customer Care</title>
+<style>
+  :root {
+    --blue-dark: #1F3864;
+    --blue-med: #2E75B6;
+    --blue-light: #D6E4F0;
+    --red: #C00000;
+    --red-bg: #FCE4D6;
+    --orange: #BF8F00;
+    --orange-bg: #FFF2CC;
+    --green: #375623;
+    --green-bg: #E2EFDA;
+    --purple: #5B2D8E;
+    --purple-bg: #EDE7F6;
+    --grey: #F5F5F5;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0f4f8;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── TOP HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-med) 100%);
+    color: white;
+    padding: 40px 48px 32px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+  .hero p { font-size: 14px; opacity: 0.75; margin-top: 4px; }
+  .hero-meta { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+  .hero-stat {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .hero-stat .n { font-size: 28px; font-weight: 800; }
+  .hero-stat .l { font-size: 11px; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    background: white;
+    border-bottom: 2px solid var(--blue-light);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow-x: auto;
+  }
+  nav a {
+    display: block;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav a:hover, nav a.active {
+    color: var(--blue-med);
+    border-bottom-color: var(--blue-med);
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  section { margin-bottom: 48px; }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--blue-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── ACCORDION ── */
+  .accordion { display: flex; flex-direction: column; gap: 10px; }
+  .accordion-item {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-left: 4px solid var(--blue-med);
+  }
+  .accordion-item.complexity-faible { border-left-color: var(--green); }
+  .accordion-item.complexity-moyen { border-left-color: var(--orange); }
+  .accordion-item.complexity-eleve { border-left-color: #e05c00; }
+  .accordion-item.complexity-critique { border-left-color: var(--red); }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .accordion-header:hover { background: #f7faff; }
+
+  .accordion-num {
+    background: var(--blue-dark);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .accordion-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-faible { background: var(--green-bg); color: var(--green); }
+  .badge-moyen { background: var(--orange-bg); color: var(--orange); }
+  .badge-eleve { background: #fde8d8; color: #c04000; }
+  .badge-critique { background: var(--red-bg); color: var(--red); }
+
+  .accordion-title {
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+    color: var(--text);
+  }
+  .accordion-meta {
+    font-size: 11px;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+  .accordion-arrow {
+    font-size: 11px;
+    color: var(--text-light);
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+  .accordion-body {
+    display: none;
+    padding: 0 20px 20px 20px;
+    border-top: 1px solid #eef0f4;
+  }
+  .accordion-item.open .accordion-body { display: block; }
+
+  /* ── SPECS BODY ── */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 700px) { .specs-grid { grid-template-columns: 1fr; } }
+
+  .specs-block {
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .specs-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+  .specs-block p, .specs-block li {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .specs-block ul {
+    padding-left: 16px;
+  }
+  .specs-block ul li { margin-bottom: 3px; }
+
+  .steps-block {
+    margin-top: 16px;
+    background: white;
+    border: 1px solid #e0e7f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .steps-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--blue-dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .steps-list { counter-reset: step; }
+  .steps-list .step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .steps-list .step:last-child { margin-bottom: 0; }
+  .step-num {
+    counter-increment: step;
+    background: var(--blue-med);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .step-content strong { color: var(--blue-dark); }
+  .step-content code {
+    background: #eef2ff;
+    color: var(--blue-dark);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Consolas', monospace;
+  }
+  .step-note {
+    background: var(--orange-bg);
+    border-left: 3px solid var(--orange);
+    padding: 6px 10px;
+    margin-top: 4px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: #6b5000;
+  }
+  .step-warning {
+    background: var(--red-bg);
+    border-left: 3px solid var(--red);
+    padding: 6px 10px;
+    margin-top: 4px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: #7a0000;
+  }
+  .step-success {
+    background: var(--green-bg);
+    border-left: 3px solid var(--green);
+    padding: 6px 10px;
+    margin-top: 4px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: #1a4a00;
+  }
+
+  .subcases {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .subcase {
+    background: white;
+    border: 1px solid #e0e7f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    border-left: 3px solid var(--blue-med);
+  }
+  .subcase.orange { border-left-color: var(--orange); }
+  .subcase.red { border-left-color: var(--red); }
+  .subcase.green { border-left-color: var(--green); }
+  .subcase h5 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 6px;
+  }
+  .subcase.orange h5 { color: var(--orange); }
+  .subcase.red h5 { color: var(--red); }
+  .subcase.green h5 { color: var(--green); }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 0; }
+  .meta-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--grey);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .meta-tag strong { color: var(--text); }
+
+  .notion-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0f4ff;
+    border: 1px solid #c5d3f0;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--blue-med);
+    text-decoration: none;
+    margin-top: 14px;
+    transition: background .15s;
+  }
+  .notion-link:hover { background: #dce6ff; }
+
+  .tarifs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .tarifs-table th {
+    background: var(--blue-dark);
+    color: white;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  .tarifs-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #eef0f4;
+  }
+  .tarifs-table tr:nth-child(even) td { background: #fafbfd; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #dde3ec;
+    background: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all .15s;
+  }
+  .filter-btn:hover { border-color: var(--blue-med); color: var(--blue-med); }
+  .filter-btn.active { background: var(--blue-dark); color: white; border-color: var(--blue-dark); }
+
+  .hidden { display: none !important; }
+
+  /* ── CONTEXTE BLOCKS ── */
+  .context-block {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .context-block.self-service {
+    border-left: 4px solid var(--green);
+  }
+  .context-block-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .context-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .context-block-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .context-block-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 700px) { .context-grid { grid-template-columns: 1fr; } }
+
+  .context-card {
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .context-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .context-card p { font-size: 12px; color: var(--text-light); margin-bottom: 8px; }
+
+  .context-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ctag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .ctag.blue { background: var(--blue-light); color: var(--blue-dark); }
+  .ctag.purple { background: var(--purple-bg); color: var(--purple); }
+  .ctag.orange { background: var(--orange-bg); color: var(--orange); }
+  .ctag.grey { background: #e4e8ef; color: #444; }
+
+  .context-reasons { display: flex; flex-direction: column; gap: 10px; }
+  .context-reason-item {
+    display: flex;
+    gap: 14px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 20px;
+    align-items: flex-start;
+  }
+  .reason-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .reason-body { flex: 1; }
+  .reason-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .reason-body p, .reason-body li { font-size: 13px; color: var(--text); line-height: 1.65; }
+  .context-reason-item.reason-blue { border-left: 4px solid var(--blue-med); }
+  .context-reason-item.reason-orange { border-left: 4px solid var(--orange); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>📋 SPECS Stripe — Procédures Manuelles</h1>
+  <p>Abby Customer Care · Guide step-by-step des 16 actions manuelles Stripe</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><div class="n">16</div><div class="l">Procédures</div></div>
+    <div class="hero-stat"><div class="n">5</div><div class="l">Critiques</div></div>
+    <div class="hero-stat"><div class="n">6</div><div class="l">Élevées</div></div>
+    <div class="hero-stat"><div class="n">5</div><div class="l">Moyennes</div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">← Rapport Bugs</a>
+  <a href="#contexte" class="active">Contexte</a>
+  <a href="#abonnements">Abonnements</a>
+  <a href="#paiements">Paiements</a>
+  <a href="#commercial">Gestes commerciaux</a>
+  <a href="#compte">Compte</a>
+</nav>
+
+<main>
+
+  <!-- INDEX TABLE -->
+  <section id="index">
+    <div class="section-title">🗂️ Index des procédures</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterAll(this)">Toutes</button>
+      <button class="filter-btn" onclick="filterBy('faible', this)">● Faible</button>
+      <button class="filter-btn" onclick="filterBy('moyen', this)">● Moyen</button>
+      <button class="filter-btn" onclick="filterBy('eleve', this)">● Élevé</button>
+      <button class="filter-btn" onclick="filterBy('critique', this)">● Critique</button>
+    </div>
+  </section>
+
+  <!-- SECTION : CONTEXTE & PÉRIMÈTRE -->
+  <section id="contexte">
+    <div class="section-title">🗺️ Contexte & périmètre d'intervention</div>
+
+    <!-- Bloc self-service -->
+    <div class="context-block self-service">
+      <div class="context-block-header">
+        <span class="context-icon">✅</span>
+        <div>
+          <div class="context-block-title">Actions réalisables en autonomie par l'utilisateur (in-app)</div>
+          <div class="context-block-sub">Ces actions ne nécessitent pas d'intervention du support</div>
+        </div>
+      </div>
+      <div class="context-grid">
+        <div class="context-card">
+          <div class="context-card-title">📦 Souscription</div>
+          <p>Le client peut s'abonner directement depuis l'application Abby aux plans :</p>
+          <div class="context-tags">
+            <span class="ctag blue">Start mensuel</span>
+            <span class="ctag blue">Start annuel</span>
+            <span class="ctag purple">Pro mensuel</span>
+            <span class="ctag purple">Pro annuel</span>
+            <span class="ctag orange">Business mensuel</span>
+            <span class="ctag orange">Business annuel</span>
+          </div>
+        </div>
+        <div class="context-card">
+          <div class="context-card-title">⬆️ Upgrade in-app</div>
+          <p>Le client peut monter en gamme seul depuis son espace :</p>
+          <div class="context-tags">
+            <span class="ctag grey">Basique → Start / Pro / Business</span>
+            <span class="ctag grey">Start → Pro / Business</span>
+            <span class="ctag grey">Pro → Business</span>
+            <span class="ctag grey">Mensuel → Annuel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pourquoi le support intervient -->
+    <div class="context-reasons">
+      <div class="context-reason-item reason-blue">
+        <div class="reason-icon">🎫</div>
+        <div class="reason-body">
+          <div class="reason-title">Souscription & upgrade — Pourquoi le support intervient</div>
+          <p>Même si ces actions sont disponibles en autonomie, le support les prend en charge quand le client a rencontré un <strong>bug lié à un code promo mal paramétré</strong> (ex : code à 1 € au lieu de 20 %). Plutôt que de risquer un churn, on envoie directement une facture par email avec la réduction correcte appliquée.</p>
+        </div>
+      </div>
+      <div class="context-reason-item reason-orange">
+        <div class="reason-icon">🔴</div>
+        <div class="reason-body">
+          <div class="reason-title">Churn & annulation — Pourquoi le support intervient</div>
+          <p>Deux situations nécessitent une intervention manuelle :</p>
+          <ul style="margin-top:6px; padding-left:18px; font-size:13px;">
+            <li style="margin-bottom:4px;"><strong>Geste commercial</strong> — passage manuel d'une facture en statut "Non recouvrable" dans Stripe (ex : impayé justifié, compensation client).</li>
+            <li><strong>Cessation d'activité</strong> — annulation immédiate avec remboursement manuel au prorata des jours non consommés.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION : ABONNEMENTS -->
+  <section id="abonnements">
+    <div class="section-title">📦 Gestion des abonnements</div>
+    <div class="accordion">
+
+      <!-- 1. SOUSCRIPTION AVEC CODE PROMO -->
+      <div class="accordion-item complexity-moyen" data-complexity="moyen" id="spec-1">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">1</div>
+          <span class="accordion-badge badge-moyen">Moyen</span>
+          <span class="accordion-title">Souscription avec code promo via lien de paiement</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Créer un abonnement Stripe pour un client en appliquant un code promo, et lui envoyer un lien de paiement sécurisé. À utiliser uniquement avec accord écrit du client.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Accord écrit du client (email ou Intercom)</li>
+                <li>Plan souhaité identifié (Start / Pro / Business)</li>
+                <li>Durée confirmée (mensuel / annuel)</li>
+                <li>Code promo valide disponible</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe Dashboard</strong> → rechercher le client par email dans la barre de recherche
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Ouvrir la fiche client → onglet <strong>Abonnements</strong> → cliquer <code>+ Créer un abonnement</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Configurer le plan</strong> : sélectionner le produit Abby + la variante (Start/Pro/Business) + la durée (mensuel/annuel)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Cliquer sur <strong>Ajouter un coupon</strong> → saisir le code promo → vérifier que la réduction s'applique correctement
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Dans la section <strong>Mode de paiement</strong> → sélectionner <code>Envoyer un lien de paiement</code>
+                  <div class="step-warning">⚠️ Ne JAMAIS sélectionner "Débiter automatiquement" sans consentement écrit explicite pour la CB du client</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Vérifier le récapitulatif : plan, réduction, montant final, date de facturation
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Cliquer <strong>Créer l'abonnement</strong> → le lien de paiement est envoyé automatiquement par email au client
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">8</div>
+                <div class="step-content">
+                  Ajouter une note dans <strong>Activité récente</strong> du client : préciser le plan, le code promo appliqué, et la source de l'accord (ex: "Abo Pro annuel créé - code promo LANCEMENT20 appliqué - accord email du 12/06")
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Moyenne</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/161f9b37fa47804f9394d38aac0adc76?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 2. UPGRADE / UPSELL -->
+      <div class="accordion-item complexity-eleve" data-complexity="eleve" id="spec-2">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">2</div>
+          <span class="accordion-badge badge-eleve">Élevé</span>
+          <span class="accordion-title">Upgrade / Upsell d'abonnement (24 combinaisons)</span>
+          <span class="accordion-meta">~8 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Faire monter en gamme un abonnement existant (ex: Start → Pro, mensuel → annuel). L'upgrade est immédiat avec prorata. Valable pour 24 combinaisons possibles de plans × durées.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Accord écrit du client (email ou Intercom)</li>
+                <li>Abonnement en état <strong>Actif</strong> ou <strong>En retard</strong></li>
+                <li>Plan de destination identifié</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>⚠️ Vérification préalable critique</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">!</div>
+                <div class="step-content">
+                  Si l'abonnement est en état <strong>"Annulation prévue"</strong> (fin de période en cours) : aller dans les 3 points <code>···</code> de l'abonnement → <strong>Ne pas annuler</strong> → confirmer. L'abonnement redevient Actif. Ensuite procéder à l'upgrade.
+                  <div class="step-warning">⚠️ Sans cette étape, l'upgrade est bloqué</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → onglet <strong>Abonnements</strong> → ouvrir l'abonnement actif
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Cliquer <strong>Actions</strong> (haut droite) → <strong>Mettre à jour l'abonnement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Dans la liste des postes : cliquer <strong>Ajouter un poste</strong> → sélectionner le nouveau produit (plan de destination)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Cliquer sur l'ancien poste → <strong>Supprimer</strong> (icône corbeille)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Ouvrir l'onglet <strong>Facture</strong> → vérifier le montant prorata généré
+                  <div class="step-note">💡 L'upgrade génère une facture prorata immédiate. Vérifier que le calcul est correct avant de valider.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Cliquer <strong>Mettre à jour l'abonnement</strong> → confirmer
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Ajouter une note dans <strong>Activité récente</strong> : préciser l'ancien plan, le nouveau plan, la date, et la source de l'accord
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~8 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Élevée</strong></div>
+            <div class="meta-tag">💰 Prorata <strong>immédiat</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/183f9b37fa4780968b29c4697fd61c2b?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 3. DOWNGRADE -->
+      <div class="accordion-item complexity-eleve" data-complexity="eleve" id="spec-3">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">3</div>
+          <span class="accordion-badge badge-eleve">Élevé</span>
+          <span class="accordion-title">Downgrade d'abonnement</span>
+          <span class="accordion-meta">~8 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Faire descendre un abonnement vers un plan inférieur (ex: Pro → Start). Contrairement à l'upgrade, le downgrade prend effet en fin de période — pas de remboursement prorata.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Accord écrit du client</li>
+                <li>Abonnement en état Actif</li>
+                <li>Identifier la prochaine date de facturation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → <strong>Abonnements</strong> → ouvrir l'abonnement actif
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Actions</strong> → <strong>Mettre à jour l'abonnement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Ajouter le nouveau plan (plan inférieur) → Supprimer l'ancien plan
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Dans les options de mise à jour, sélectionner <code>En fin de période actuelle</code>
+                  <div class="step-warning">⚠️ NE PAS choisir "Immédiatement" pour un downgrade — cela facturerait le client deux fois</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Valider → L'abonnement affiche le statut <strong>"Annulation prévue"</strong> avec le nouveau plan effectif à partir de la prochaine date de facturation
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Envoyer la macro <strong>"Confirmation downgrade"</strong> au client dans Intercom
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Ajouter une note dans Activité récente : ancien plan → nouveau plan, date effective
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="specs-block" style="margin-top:14px;">
+            <h4>📅 Règles de timing</h4>
+            <ul>
+              <li><strong>Abonnement mensuel</strong> → downgrade effectif en fin du mois en cours</li>
+              <li><strong>Abonnement annuel</strong> → downgrade effectif en fin de l'année en cours</li>
+              <li>Aucun remboursement prorata dans les deux cas</li>
+            </ul>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~8 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Élevée</strong></div>
+            <div class="meta-tag">📅 Effectif <strong>fin de période</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/36ef9b37fa478178b576facd696e2d11?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 4. CHANGEMENT FRACTIONNEMENT -->
+      <div class="accordion-item complexity-moyen" data-complexity="moyen" id="spec-4">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">4</div>
+          <span class="accordion-badge badge-moyen">Moyen</span>
+          <span class="accordion-title">Changement de fractionnement mensuel ↔ annuel</span>
+          <span class="accordion-meta">~6 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Modifier uniquement la périodicité d'un abonnement (mensuel → annuel ou annuel → mensuel) sans changer de plan. Passage mensuel → annuel = immédiat avec prorata. Annuel → mensuel = fin de période.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Accord écrit du client</li>
+                <li>Abonnement Actif</li>
+                <li>Clarifier le sens du changement (upgrade de durée vs downgrade)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → <strong>Abonnements</strong> → ouvrir l'abonnement actif
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Actions</strong> → <strong>Mettre à jour l'abonnement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Cliquer sur le plan actuel → le remplacer par la variante de même niveau mais période différente (ex: "Abby Pro Mensuel" → "Abby Pro Annuel")
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Choisir le timing :
+                  <ul style="margin-top:4px;padding-left:16px;">
+                    <li>Mensuel → Annuel : <code>Immédiatement</code> (upgrade = prorata)</li>
+                    <li>Annuel → Mensuel : <code>En fin de période</code> (downgrade)</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Vérifier l'onglet <strong>Facture</strong> (prorata si immédiat) → valider
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Ajouter une note dans Activité récente
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~6 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Moyenne</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/183f9b37fa4780968b29c4697fd61c2b?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 6. ANNULER UN ABONNEMENT (3 sous-cas) -->
+      <div class="accordion-item complexity-critique" data-complexity="critique" id="spec-6">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">6</div>
+          <span class="accordion-badge badge-critique">Critique</span>
+          <span class="accordion-title">Annuler un abonnement (3 sous-cas)</span>
+          <span class="accordion-meta">~6 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Annuler définitivement un abonnement Stripe. La procédure varie selon le cas : fin d'essai, fin de période normal, ou cessation d'activité avec remboursement.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Identifier le cas parmi les 3 sous-cas</li>
+                <li>Vérifier les critères d'éligibilité au remboursement si applicable</li>
+                <li>Accès au raccourci Stripe depuis Intercom</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure commune (étapes 1-4)</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  Depuis Intercom : utiliser le <strong>raccourci Stripe</strong> pour ouvrir directement la fiche du client
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Dans la fiche client Stripe → section <strong>Abonnements</strong> → cliquer sur l'email/nom de l'abonnement actif
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Cliquer <strong>Actions</strong> (haut droite) → <strong>Annuler l'abonnement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Choisir le mode d'annulation selon le sous-cas (voir ci-dessous)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subcases">
+            <div class="subcase green">
+              <h5>Cas 1 — Fin d'essai 14 jours (pas de paiement effectué)</h5>
+              <p style="font-size:13px;">Sélectionner <code>Immédiatement</code> → aucun remboursement car aucun paiement n'a eu lieu. Confirmer l'annulation.</p>
+            </div>
+            <div class="subcase">
+              <h5>Cas 2 — Annulation en fin de période (client ne veut plus renouveler)</h5>
+              <p style="font-size:13px;">Sélectionner <code>En fin de la période actuelle</code> → l'accès reste actif jusqu'à la prochaine date de facturation, puis l'abonnement s'annule. Pas de remboursement prorata.</p>
+            </div>
+            <div class="subcase red">
+              <h5>Cas 3 — Cessation d'activité (remboursement prorata)</h5>
+              <p style="font-size:13px;">Sélectionner <code>Immédiatement</code> → cocher <strong>"Rembourser le montant au prorata"</strong> → confirmer. Le remboursement est calculé sur les jours non utilisés.</p>
+              <div class="step-warning" style="margin-top:6px;">⚠️ Vérifier l'éligibilité au remboursement avant de procéder (justificatif de cessation si nécessaire)</div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~6 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Critique</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/1a1f9b37fa4780dbac2bde5e8eedcd0f?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 11. RENEW AVEC CODE PROMO (3 sous-cas) -->
+      <div class="accordion-item complexity-critique" data-complexity="critique" id="spec-11">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">11</div>
+          <span class="accordion-badge badge-critique">Critique</span>
+          <span class="accordion-title">Renouvellement avec code promo (3 sous-cas)</span>
+          <span class="accordion-meta">~10 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Appliquer un code promo lors d'un renouvellement. Le traitement diffère selon l'état de l'abonnement : annulé, en retard, ou avec facture ouverte.</p>
+            </div>
+            <div class="specs-block">
+              <h4>💰 Tarifs de référence</h4>
+              <table class="tarifs-table">
+                <tr><th>Plan</th><th>Mensuel</th><th>Annuel</th></tr>
+                <tr><td>Start</td><td>13,20 €</td><td>129,60 €</td></tr>
+                <tr><td>Pro</td><td>22,80 €</td><td>216,00 €</td></tr>
+                <tr><td>Business</td><td>46,80 €</td><td>475,20 €</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="subcases">
+            <div class="subcase green">
+              <h5>Cas 1 — Abonnement annulé (le client revient)</h5>
+              <div class="steps-list" style="margin-top:8px;">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-content">Stripe → fiche client → <strong>Abonnements</strong> → <code>+ Créer un abonnement</code></div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-content">Sélectionner le plan + durée → ajouter le coupon (code promo)</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-content">Mode paiement → <code>Envoyer un lien de paiement</code> → créer</div>
+                </div>
+              </div>
+            </div>
+            <div class="subcase orange">
+              <h5>Cas 2 — Abonnement en retard (facture impayée)</h5>
+              <div class="steps-list" style="margin-top:8px;">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-content">Ouvrir l'abonnement existant → <strong>Actions</strong> → <strong>Mettre à jour l'abonnement</strong></div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-content">Cliquer <strong>Ajouter un coupon</strong> → saisir le code promo</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-content">Vérifier la facture en retard → envoyer au client pour paiement</div>
+                </div>
+              </div>
+            </div>
+            <div class="subcase">
+              <h5>Cas 3 — Facture "Ouverte" (pas encore prélevée)</h5>
+              <div class="steps-list" style="margin-top:8px;">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-content">Ouvrir l'abonnement → <strong>Actions</strong> → <strong>Mettre à jour l'abonnement</strong></div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-content">Ajouter le code promo dans le champ coupon → valider</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-content">La facture ouverte se met à jour avec la réduction → vérifier le montant final</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~10 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Critique</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/161f9b37fa4780b78b8dddb2930d8165?pvs=1" target="_blank">📒 Tarifs Notion</a>
+        </div>
+      </div>
+
+      <!-- 15. MISE EN PAUSE -->
+      <div class="accordion-item complexity-moyen" data-complexity="moyen" id="spec-15">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">15</div>
+          <span class="accordion-badge badge-moyen">Moyen</span>
+          <span class="accordion-title">Mise en pause de l'abonnement</span>
+          <span class="accordion-meta">~6 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Suspendre temporairement un abonnement pendant 3 mois maximum. Limité à 1 fois par an par client. Sert à éviter un churn en proposant une alternative à l'annulation.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Vérifier la balise <code>bot:pauseabochurn</code> dans Intercom (= déjà fait cette année)</li>
+                <li>Maximum 1 pause par an</li>
+                <li>Abonnement en état Actif</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  Vérifier dans Intercom si la balise <code>bot:pauseabochurn</code> est présente sur le contact
+                  <div class="step-warning">⚠️ Si la balise est présente → envoyer la macro <strong>"Mise en pause impossible"</strong> et clore la conversation</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → ouvrir l'abonnement actif
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Actions</strong> → <strong>Suspendre le renouvellement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Calculer la date de reprise : <code>date_prochaine_facture + 3 mois</code>
+                  <div class="step-note">💡 Exemple : prochaine facture le 15 juillet → reprise le 15 octobre</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Saisir la date de fin de pause calculée → confirmer la suspension
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Envoyer la macro <strong>"Mise en pause effectuée"</strong> au client dans Intercom
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Ajouter la balise <code>bot:pauseabochurn</code> dans Intercom sur le contact
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~6 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Moyenne</strong></div>
+            <div class="meta-tag">📅 Max <strong>1×/an</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/17df9b37fa4780cbaaf0c595d02e6416?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+    </div><!-- /accordion abonnements -->
+  </section>
+
+  <!-- SECTION : PAIEMENTS -->
+  <section id="paiements">
+    <div class="section-title">💳 Gestion des paiements</div>
+    <div class="accordion">
+
+      <!-- 7. REMBOURSEMENT -->
+      <div class="accordion-item complexity-critique" data-complexity="critique" id="spec-7">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">7</div>
+          <span class="accordion-badge badge-critique">Critique</span>
+          <span class="accordion-title">Remboursement client</span>
+          <span class="accordion-meta">~10 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Rembourser tout ou partie d'une somme déjà prélevée. À utiliser uniquement dans des cas justifiés (cessation d'activité, erreur de facturation). La préférence est toujours au crédit Stripe.</p>
+            </div>
+            <div class="specs-block">
+              <h4>⚡ Règles importantes</h4>
+              <ul>
+                <li><strong>Préférer le crédit Stripe</strong> à un remboursement réel (plus simple, pas de délai bancaire)</li>
+                <li>Remboursement réel uniquement si litige → escalader au superviseur</li>
+                <li>Ne jamais rembourser sans validation de la raison</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Option A — Remboursement via annulation immédiate avec prorata</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">Stripe → abonnement → <strong>Actions</strong> → <strong>Annuler l'abonnement</strong></div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">Sélectionner <code>Immédiatement</code> → cocher <strong>"Rembourser le montant au prorata"</strong></div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">Vérifier le montant calculé → confirmer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Option B — Remboursement direct depuis une transaction</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">Stripe → fiche client → onglet <strong>Paiements</strong> → ouvrir le paiement concerné</div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">Cliquer <strong>Rembourser le paiement</strong> (bouton haut droite)</div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">Saisir le montant (partiel ou total) → ajouter une raison → confirmer</div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Ajouter une note dans Activité récente avec la justification du remboursement
+                  <div class="step-warning">⚠️ En cas de litige → NE PAS procéder seul. Escalader au superviseur avant tout remboursement.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~10 min</strong></div>
+            <div class="meta-tag">👤 Agent + superviseur si litige</div>
+            <div class="meta-tag">⚡ Complexité <strong>Critique</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. NON RECOUVRABLE -->
+      <div class="accordion-item complexity-critique" data-complexity="critique" id="spec-8">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">8</div>
+          <span class="accordion-badge badge-critique">Critique</span>
+          <span class="accordion-title">Passage d'une facture en "Non Recouvrable"</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Marquer une facture comme irrécupérable pour éviter que Stripe ne relance des tentatives de prélèvement automatiques, et pour débloquer l'accès à l'app si nécessaire.</p>
+            </div>
+            <div class="specs-block">
+              <h4>⚡ Pourquoi c'est critique</h4>
+              <ul>
+                <li>Sans ce statut : Stripe retente le prélèvement automatiquement (jusqu'à 4 fois)</li>
+                <li>Peut bloquer l'accès à l'application Abby</li>
+                <li>Facture reste "En retard" indéfiniment sans action</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → onglet <strong>Factures</strong> → ouvrir la facture concernée
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Cliquer sur les <strong>3 points ···</strong> en haut à droite de la facture
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Sélectionner <strong>"Modifier l'état de la facture"</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Dans la liste déroulante, choisir <code>Non recouvrable</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Ajouter une note expliquant la raison (ex: "Client en cessation d'activité - accord superviseur")
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Cliquer <strong>"Mettre à jour l'état"</strong> → vérifier que la facture affiche bien "Non recouvrable"
+                  <div class="step-success">✅ La facture ne génèrera plus de tentatives de prélèvement automatiques</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Critique</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/183f9b37fa47806287dcce104998d957?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 9. ENVOI FACTURE MANUELLE -->
+      <div class="accordion-item complexity-moyen" data-complexity="moyen" id="spec-9">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">9</div>
+          <span class="accordion-badge badge-moyen">Moyen</span>
+          <span class="accordion-title">Envoi de facture manuelle</span>
+          <span class="accordion-meta">~7 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Créer et envoyer une facture one-shot hors abonnement (ex: prestation complémentaire, régularisation, avoir). Peut être envoyée immédiatement ou planifiée à une date future.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Description et montant validés</li>
+                <li>Client existant dans Stripe</li>
+                <li>Moyen de paiement du client (si débit auto)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → cliquer <code>+ Créer une facture</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Section <strong>Postes de facturation</strong> → ajouter un poste : saisir la description et le montant HT
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Vérifier la TVA applicable (20% standard ou 8,5% DROM)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Section <strong>Paiement</strong> : choisir le mode →
+                  <ul style="margin-top:4px;padding-left:16px;">
+                    <li><code>Demander un paiement</code> : envoie un lien de paiement par email immédiatement</li>
+                    <li><code>Planifier la date d'envoi</code> : différer l'envoi à une date précise</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Relire le récapitulatif → cliquer <strong>Confirmer la facture</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Ajouter une note dans Activité récente du client
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~7 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Moyenne</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. AJOUT CRÉDIT STRIPE -->
+      <div class="accordion-item complexity-moyen" data-complexity="moyen" id="spec-12">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">12</div>
+          <span class="accordion-badge badge-moyen">Moyen</span>
+          <span class="accordion-title">Ajout d'un crédit Stripe (solde créditeur)</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Ajouter un crédit au solde Stripe d'un client. Ce crédit sera automatiquement déduit de sa prochaine facture. Utilisé pour gestes commerciaux, compensations, parrainages.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Montant validé (et raison documentée)</li>
+                <li>Client existant dans Stripe</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → section <strong>Solde créditeur de facture</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Cliquer <strong>Réajuster le solde</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Type : sélectionner <code>Crédit</code> (et non "Débit" !)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Saisir le montant en euros → ajouter une note interne expliquant la raison
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Cliquer <strong>Appliquer au solde créditeur</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Vérifier que le solde affiché a bien augmenté du montant ajouté
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Section <strong>Activité récente</strong> → <code>+ Ajouter une note</code> : consigner le montant, la raison, et la date
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Moyenne</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/161f9b37fa4780119a4ac9fe6d97acdd?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 14. TVA RÉDUITE DROM -->
+      <div class="accordion-item complexity-eleve" data-complexity="eleve" id="spec-14">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">14</div>
+          <span class="accordion-badge badge-eleve">Élevé</span>
+          <span class="accordion-title">Gestion des taux de TVA réduits (DROM — 8,5%)</span>
+          <span class="accordion-meta">~15 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Pour les clients situés dans les DOM-ROM (Guadeloupe, Martinique, Réunion, Guyane, Mayotte), la TVA est de 8,5% au lieu de 20%. Nécessite une correction manuelle via un workflow à 2 niveaux (Agent → Team Lead).</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Vérifier l'adresse du client (DOM-ROM confirmé)</li>
+                <li>Identifier l'état de la facture (Payée ou En attente)</li>
+                <li>Escalader au Team Lead — l'agent ne procède pas seul</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Étape 1 — Agent (vérification + escalade)</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">Vérifier l'adresse du client dans Abby → confirmer DOM-ROM (éligible TVA 8,5%)</div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">Créer un ticket interne pour le Team Lead avec : nom client, ID Stripe, état de la facture, montant</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subcases">
+            <div class="subcase red">
+              <h5>Cas A — Facture déjà Payée (correction rétroactive)</h5>
+              <div class="steps-list" style="margin-top:8px;">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-content">Stripe → ouvrir la facture payée → <strong>Annuler la facture</strong></div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-content">Rembourser via avoir (créer une note de crédit)</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-content">Créer une nouvelle facture avec TVA 8,5% → valider via un crédit Stripe de 0€ pour déclencher la validation</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">4</div>
+                  <div class="step-content">Mettre à jour l'abonnement avec le taux réduit pour les prochaines factures</div>
+                </div>
+              </div>
+            </div>
+            <div class="subcase orange">
+              <h5>Cas B — Facture En attente (pas encore prélevée)</h5>
+              <div class="steps-list" style="margin-top:8px;">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div class="step-content">Stripe → annuler la facture en attente</div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-content">Recréer une nouvelle facture avec TVA 8,5% → envoyer le lien de paiement</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~15 min</strong></div>
+            <div class="meta-tag">👥 Agent + Team Lead</div>
+            <div class="meta-tag">⚡ Complexité <strong>Élevée</strong></div>
+            <div class="meta-tag">🇷🇪 DROM <strong>8,5%</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/16ff9b37fa47807688acd1e0f9b94296?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 16. CONVERSION MULTI-ANNÉES -->
+      <div class="accordion-item complexity-eleve" data-complexity="eleve" id="spec-16">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">16</div>
+          <span class="accordion-badge badge-eleve">Élevé</span>
+          <span class="accordion-title">Conversion abonnement annuel → multi-années (2 ou 3 ans)</span>
+          <span class="accordion-meta">~15 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Permettre à un client de s'engager sur 2 ou 3 ans avec un paiement échelonné (2 ou 3 fois). Implique la création de plusieurs factures planifiées manuellement dans Stripe.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Convenir de la durée (2 ou 3 ans) avec le client</li>
+                <li>Convenir de l'échelonnement (2 ou 3 fois)</li>
+                <li>Maximum 3 versements</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step (exemple : 2 ans en 2 fois)</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  Calculer le montant total : <code>tarif annuel × nombre d'années</code>
+                  <div class="step-note">💡 Exemple : Abby Pro 2 ans = 216€ × 2 = 432€ en 2 versements de 216€</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Stripe → fiche client → <strong>Solde créditeur</strong> → <strong>Réajuster le solde</strong> → ajouter un crédit égal au montant total de l'abonnement
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Valider l'abonnement via le crédit (la prochaine facture sera absorbée par le crédit)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Créer la <strong>Facture 1</strong> (débit immédiat) :
+                  <ul style="margin-top:4px;padding-left:16px;">
+                    <li>Description : <code>"Abby Pro 1/2 — Abonnement 2 ans"</code></li>
+                    <li>Montant : 1er versement</li>
+                    <li>Mode : <code>Demander un paiement</code></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Créer la <strong>Facture 2</strong> (planifiée à M+1 ou M+12) :
+                  <ul style="margin-top:4px;padding-left:16px;">
+                    <li>Description : <code>"Abby Pro 2/2 — Abonnement 2 ans"</code></li>
+                    <li>Montant : 2e versement</li>
+                    <li>Mode : <code>Planifier la date d'envoi</code> → date = mois suivant</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Si 3 fois : créer une <strong>Facture 3</strong> planifiée à M+2 (ou M+24) → description <code>"Abby Pro 3/3"</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  Ajouter une note dans Activité récente : récapituler le plan, la durée, les montants et les dates de prélèvement
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~15 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Élevée</strong></div>
+            <div class="meta-tag">📄 Max <strong>3 versements</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/183f9b37fa478025b444e4ca29d52d40?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+    </div><!-- /accordion paiements -->
+  </section>
+
+  <!-- SECTION : GESTES COMMERCIAUX -->
+  <section id="commercial">
+    <div class="section-title">🎁 Gestes commerciaux & crédits</div>
+    <div class="accordion">
+
+      <!-- 5. SOLDE CRÉDITEUR PARRAINAGE -->
+      <div class="accordion-item complexity-faible" data-complexity="faible" id="spec-5">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">5</div>
+          <span class="accordion-badge badge-faible">Faible</span>
+          <span class="accordion-title">Solde créditeur — parrainage</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Récompenser un client ayant parrainé un nouvel abonné. Trois options sont disponibles selon la situation et la demande du client.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Parrainage confirmé et validé</li>
+                <li>Choisir l'option avec le client (ou selon politique en vigueur)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="subcases">
+            <div class="subcase green">
+              <h5>Option A — Crédit Stripe (recommandé)</h5>
+              <p style="font-size:13px;">Ajouter un crédit au solde Stripe du client → voir procédure <strong>#12 Ajout crédit Stripe</strong>. Note interne : "Crédit parrainage - [nom filleul]"</p>
+            </div>
+            <div class="subcase">
+              <h5>Option B — Virement sur facture via programme de parrainage</h5>
+              <p style="font-size:13px;">Transférer la demande à <strong>Rindra</strong> avec : nom parrain, nom filleul, montant dû, RIB si disponible. Label facture : <code>"Programme de parrainage Abby"</code></p>
+            </div>
+            <div class="subcase orange">
+              <h5>Option C — Carte cadeau Illicado virtuelle</h5>
+              <p style="font-size:13px;">Générer une carte Illicado virtuelle du montant correspondant → envoyer le code par email au client.</p>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Faible</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/166f9b37fa47807fb130d369465b520f?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- 10. GESTE COMMERCIAL MOIS OFFERTS -->
+      <div class="accordion-item complexity-faible" data-complexity="faible" id="spec-10">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">10</div>
+          <span class="accordion-badge badge-faible">Faible</span>
+          <span class="accordion-title">Geste commercial — mois offert(s)</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Accorder un ou plusieurs mois gratuits en compensation d'un incident ou en geste commercial. Réalisé via un crédit Stripe égal au tarif mensuel du plan du client.</p>
+            </div>
+            <div class="specs-block">
+              <h4>💰 Calcul du montant</h4>
+              <table class="tarifs-table">
+                <tr><th>Plan</th><th>1 mois = crédit</th></tr>
+                <tr><td>Start</td><td>13,20 €</td></tr>
+                <tr><td>Pro</td><td>22,80 €</td></tr>
+                <tr><td>Business</td><td>46,80 €</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  Identifier le plan actuel du client → calculer le montant du crédit (nombre de mois × tarif mensuel)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → <strong>Solde créditeur de facture</strong> → <strong>Réajuster le solde</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Type : <code>Crédit</code> → montant → note interne : <code>"Geste commercial - 1 mois offert - [raison]"</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Appliquer → vérifier le solde créditeur mis à jour
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  <strong>Activité récente</strong> → <code>+ Ajouter une note</code> : consigner le geste, la raison, le montant
+                  <div class="step-note">💡 Le crédit sera automatiquement déduit de la prochaine facture du client</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Faible</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/160f9b37fa47803294e6eeaaa848e9d7?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+    </div><!-- /accordion commercial -->
+  </section>
+
+  <!-- SECTION : COMPTE -->
+  <section id="compte">
+    <div class="section-title">⚙️ Gestion du compte Stripe</div>
+    <div class="accordion">
+
+      <!-- 13. SUPPRESSION COMPTE STRIPE EXPRESS -->
+      <div class="accordion-item complexity-eleve" data-complexity="eleve" id="spec-13">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">13</div>
+          <span class="accordion-badge badge-eleve">Élevé</span>
+          <span class="accordion-title">Suppression du compte Stripe Express lié à Abby</span>
+          <span class="accordion-meta">~8 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Supprimer le compte Stripe Express d'un client (compte utilisé pour percevoir des paiements via Abby). Irréversible — nécessite des prérequis stricts.</p>
+            </div>
+            <div class="specs-block">
+              <h4>⚠️ Prérequis stricts</h4>
+              <ul>
+                <li>Solde du compte = <strong>0,00 €</strong></li>
+                <li>Aucun virement en cours ou en attente</li>
+                <li>Vérifier dans le dashboard Stripe Express</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe Dashboard</strong> → fiche client → faire défiler vers le bas jusqu'à la section <strong>Stripe Express</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Vérifier le solde disponible : doit être <code>0,00 €</code>
+                  <div class="step-warning">⚠️ Si le solde est > 0 : attendre le virement automatique ou déclencher un paiement manuel avant de supprimer</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  Vérifier qu'aucun virement n'est en cours (statut "En cours" dans la section virements)
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Cliquer sur les <strong>3 points ···</strong> à côté du compte Stripe Express → <strong>Supprimer</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Confirmer la suppression dans la popup de confirmation
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  Envoyer la macro de <strong>confirmation de suppression</strong> au client dans Intercom
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~8 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Élevée</strong></div>
+            <div class="meta-tag">⚠️ <strong>Irréversible</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/1a1f9b37fa4780c8b379ee034bfbc771?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+      <!-- AUTO-DÉBIT CB/PAYPAL -->
+      <div class="accordion-item complexity-faible" data-complexity="faible" id="spec-auto">
+        <div class="accordion-header" onclick="toggle(this)">
+          <div class="accordion-num">🔧</div>
+          <span class="accordion-badge badge-faible">Faible</span>
+          <span class="accordion-title">Activation du débit automatique (CB ou PayPal)</span>
+          <span class="accordion-meta">~5 min</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="specs-grid">
+            <div class="specs-block">
+              <h4>🎯 Contexte</h4>
+              <p>Basculer un abonnement du mode "lien de paiement" vers un prélèvement automatique sur la CB ou PayPal enregistré du client. Requiert le consentement explicite écrit du client.</p>
+            </div>
+            <div class="specs-block">
+              <h4>✅ Prérequis</h4>
+              <ul>
+                <li>Consentement écrit du client (email ou Intercom)</li>
+                <li>Moyen de paiement enregistré dans Stripe</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="steps-block">
+            <h4>📋 Procédure step-by-step</h4>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Stripe</strong> → fiche client → onglet <strong>Abonnements</strong> → ouvrir l'abonnement
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  Vérifier que le client a un moyen de paiement enregistré (CB ou PayPal) dans la section <strong>Moyens de paiement</strong>
+                  <div class="step-warning">⚠️ Si aucun moyen de paiement : envoyer un lien de mise à jour de CB au client d'abord</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Actions</strong> → <strong>Mettre à jour l'abonnement</strong>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  Dans la section Mode de paiement, basculer sur <code>Débiter automatiquement</code> → sélectionner le moyen de paiement enregistré
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  Valider → ajouter une note dans Activité récente (source du consentement)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta-tag">🕐 <strong>~5 min</strong></div>
+            <div class="meta-tag">👤 Agent</div>
+            <div class="meta-tag">⚡ Complexité <strong>Faible</strong></div>
+          </div>
+          <a class="notion-link" href="https://app.notion.com/p/183f9b37fa4780c0a025c898db8be421?pvs=1" target="_blank">📒 Voir process Notion</a>
+        </div>
+      </div>
+
+    </div><!-- /accordion compte -->
+  </section>
+
+</main>
+
+<script>
+function toggle(header) {
+  const item = header.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.classList.toggle('open', !wasOpen);
+}
+
+function filterBy(complexity, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    item.classList.toggle('hidden', item.dataset.complexity !== complexity);
+  });
+}
+
+function filterAll(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    item.classList.remove('hidden');
+  });
+}
+</script>
+
+</body>
+</html>
