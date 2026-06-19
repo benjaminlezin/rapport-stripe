@@ -448,7 +448,7 @@
   <h1>Rapport Stripe — Bugs & Difficultés</h1>
   <p>Abby Customer Care · Analyse janvier – juin 2026 · 14 vidéos Loom analysées</p>
   <div class="hero-meta">
-    <div class="hero-stat"><div class="n">8</div><div class="l">Bugs documentés</div></div>
+    <div class="hero-stat"><div class="n">9</div><div class="l">Bugs documentés</div></div>
     <div class="hero-stat"><div class="n">3</div><div class="l">Bugs critiques (cluster)</div></div>
     <div class="hero-stat"><div class="n">7</div><div class="l">Cas d'usage complexes</div></div>
     <div class="hero-stat"><div class="n">16+</div><div class="l">Actions manuelles care</div></div>
@@ -774,6 +774,31 @@
               <div class="conv-text">« Nouveau truc bizarre sur Stripe. Un utilisateur a souscrit Pro Plus CE le 12 mars 2025 à 220,80€ avec 20% de remise. Son abonnement se renouvelle automatiquement le 12 mars — la facture a été prélevée le 6 avril après plusieurs appels. Mais entre temps, le 23 mars, il a souhaité churner et souscrit un Bi-Start. Du coup on a deux clients souscrits à Bistart le 23 mars — ça veut dire deux abonnements actifs en parallèle : 1 pour le renouvellement Pro CE (facture du 12 mars prélevée le 6 avril) et 1 pour le Bi-Start souscrit le 23 mars. Il peut réclamer le remboursement des 264€ prélevés après son souhait de churner. Je vais jouer sur le fait qu'il était en cours de renouvellement. J'espère que ça s'est clair — désolé pour ces remontées complexes sur Stripe. »</div>
               <div class="conv-action">→ L'absence de gel du renouvellement pendant la période de churn crée 2 abonnements actifs simultanément — le client a été prélevé 25 jours après avoir voulu churner</div>
               <a href="https://www.loom.com/share/01fe697ff9b14f25b30f30666054e21f" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-haute">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🟠 HAUTE</span>
+          <span class="accordion-title">Bug F — Re-souscription possible après règlement d'une facture manuelle</span>
+          <span class="accordion-meta">17 juin 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Un client reçoit une facture d'abonnement envoyée manuellement (108 €) le 16 juin et la règle le lendemain. Malgré ce paiement, le client re-souscrit de son côté via l'app à l'offre en cours avec 20 % de remise (107,35 €). Stripe autorise la double souscription sans blocage. Le système ne devrait pas permettre une re-souscription au même plan une fois la facture manuelle acquittée — seul un upgrade devrait rester possible.</p>
+          <div class="quote">« Malgré ça, le client il a pu et il pourrait être surfacturé dans le sens où il a recliqué pour prendre un abonnement de son côté avec la promo en vigueur actuelle de 20%. Ça c'est un comportement qui ne devrait pas exister. »</div>
+          <a href="https://www.loom.com/share/1558a1c6a135479a9c024c5395db39ce" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div style="margin-top:8px;">
+            <a href="https://dashboard.stripe.com/acct_1JADtrI21zkxZU1x/customers/cus_UCyUfANOP85rGA" target="_blank" class="loom-link" style="background:#635bff;color:#fff;border-color:#635bff;">💳 Voir le client Stripe</a>
+          </div>
+          <div class="conv-section">
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">17 juin 2026 · 1 min 1 sec</span></div>
+              <div class="conv-text">« Ce client, je lui avais envoyé manuellement une facture d'abonnement le 16 juin, qu'il a réglée donc hier, à 108 euros. Et malgré ça, le client il a pu et il pourrait être surfacturé dans le sens où il a recliqué pour prendre un abonnement de son côté avec la promo en vigueur actuelle de 20%. »</div>
+              <div class="conv-action">→ Stripe ne bloque pas la re-souscription d'un client qui vient de régler une facture manuelle pour le même plan. Risque de double facturation. Le client devrait uniquement pouvoir upgrader, pas souscrire à nouveau au même niveau.</div>
+              <a href="https://www.loom.com/share/1558a1c6a135479a9c024c5395db39ce" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
             </div>
           </div>
         </div>
