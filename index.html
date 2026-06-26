@@ -807,22 +807,22 @@
       <div class="accordion-item severity-critique">
         <div class="accordion-header" onclick="toggle(this)">
           <span class="accordion-badge badge-critique">🔴 CRITIQUE</span>
-          <span class="accordion-title">Bug G — Code promo affiché en checkout mais non appliqué au prélèvement Stripe</span>
+          <span class="accordion-title">Bug G — Promo mal calculée (1 € au lieu de −35 %) + re-souscription multiple au même plan possible</span>
           <span class="accordion-meta">24 juin 2026 · Morgane Eberlé</span>
           <span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body">
-          <p class="desc">Lors de sa première souscription Abby Start mensuel, Morgane Eberlé saisit le code ABBYSUMMER35 (−35 % sur 3 premiers mois). Le tarif réduit s'affiche correctement dans l'interface au moment du paiement. Pourtant Stripe prélève 12,20 € — le plein tarif (11 € HT + 20 % TVA) — sans appliquer la remise. Aucun message d'erreur n'est présenté à la cliente. Le coupon est rendu visible dans l'UI mais jamais transmis à la charge Stripe.</p>
-          <div class="quote">« Bonjour je viens de payer un abonnement start mais la réduction de 35% n'a pas été appliquée. Oui c'est ma première souscription, le code était affiché avec le tarif réduit mais j'ai été prélevé de 12,20 euros. »</div>
+          <p class="desc">Morgane Eberlé souscrit un abonnement Start mensuel le 24 juin avec le code ABBYSUMMER35 (−35 % sur 3 mois). La promo ne s'applique qu'à 1 € de réduction au lieu des 35 % attendus. Se rendant compte de l'erreur, elle re-souscrit le même abonnement 5 minutes après (20h57) — ce qui devrait être impossible une fois un abonnement actif. Elle re-souscrit même une 3ème fois, finissant par obtenir les 35 % mais avec un prorata calculé sur l'abonnement précédent, générant un solde créditeur de 4,62 €. Résultat : profil Stripe dégradé (3 souscriptions, soldes créditeurs), intervention manuelle nécessaire pour régulariser les 3 mois restants à −35 %.</p>
+          <div class="quote">« Elle a pu souscrire un abonnement avec une promo d'un euro alors qu'elle aurait dû avoir 35%. 5 minutes après, elle a re-souscrit le même abonnement Start mensuel — ça devrait être impossible, une fois qu'on a souscrit un abonnement on ne peut pas re-souscrire le même. Ça a mis un peu le bazar dans son profil Stripe. »</div>
           <a href="https://www.loom.com/share/c6e1442ddf094982b4b677b725077310" target="_blank" class="loom-link">🎥 Voir le Loom</a>
           <div style="margin-top:8px;">
             <a href="https://dashboard.stripe.com/acct_1JADtrI21zkxZU1x/customers/cus_Ued7kRk8tOAWen" target="_blank" class="loom-link" style="background:#635bff;color:#fff;border-color:#635bff;">💳 Voir le client Stripe</a>
           </div>
           <div class="conv-section">
             <div class="conv-item loom">
-              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">24 juin 2026</span></div>
-              <div class="conv-text">« Bug de souscription et remise Stripe. » — Code ABBYSUMMER35 affiché avec le prix réduit au checkout, mais le prélèvement part au plein tarif (12,20 €). La remise est visible côté UI mais absente côté Stripe.</div>
-              <div class="conv-action">→ Le coupon est appliqué dans l'interface Abby mais n'est pas transmis à l'API Stripe au moment de la création de l'abonnement. Bug silencieux : la cliente ne reçoit aucune erreur et croit bénéficier de la promo.</div>
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">24 juin 2026 · 2 min 10 sec</span></div>
+              <div class="conv-text">« 1) ABBYSUMMER35 n'applique qu'1 € au lieu des 35 % → comment est-ce possible in-app ? 2) 5 min après, re-souscription au même plan/fractionnement → devrait être bloqué. 3) 3ème souscription encore possible avec 35 % cette fois, générant un prorata et un solde créditeur de 4,62 €. La cliente a finalement bien les 35 % mais n'a payé qu'une fois. Profil Stripe : bazar. »</div>
+              <div class="conv-action">→ Deux bugs imbriqués : (1) coupon ABBYSUMMER35 mal calculé à la souscription (1 € flat au lieu de −35 %) ; (2) re-souscription au même abonnement/fractionnement non bloquée, permettant 3 tentatives en 5 min. Intervention manuelle : solde créditeur à ajuster + 35 % à réappliquer sur les 3 mois restants.</div>
               <a href="https://www.loom.com/share/c6e1442ddf094982b4b677b725077310" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
             </div>
             <div class="conv-item intercom">
