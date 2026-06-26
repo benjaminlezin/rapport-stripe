@@ -448,7 +448,7 @@
   <h1>Rapport Stripe — Bugs & Difficultés</h1>
   <p>Abby Customer Care · Analyse janvier – juin 2026 · 14 vidéos Loom analysées</p>
   <div class="hero-meta">
-    <div class="hero-stat"><div class="n">9</div><div class="l">Bugs documentés</div></div>
+    <div class="hero-stat"><div class="n">10</div><div class="l">Bugs documentés</div></div>
     <div class="hero-stat"><div class="n">3</div><div class="l">Bugs critiques (cluster)</div></div>
     <div class="hero-stat"><div class="n">7</div><div class="l">Cas d'usage complexes</div></div>
     <div class="hero-stat"><div class="n">16+</div><div class="l">Actions manuelles care</div></div>
@@ -478,7 +478,7 @@
         <div class="card-label">Bugs confirmés<br>(Slack + Loom)</div>
       </div>
       <div class="card red">
-        <div class="card-n">5</div>
+        <div class="card-n">7</div>
         <div class="card-label">Bugs Loom<br>(analyses détaillées)</div>
       </div>
       <div class="card red">
@@ -799,6 +799,36 @@
               <div class="conv-text">« Ce client, je lui avais envoyé manuellement une facture d'abonnement le 16 juin, qu'il a réglée donc hier, à 108 euros. Et malgré ça, le client il a pu et il pourrait être surfacturé dans le sens où il a recliqué pour prendre un abonnement de son côté avec la promo en vigueur actuelle de 20%. »</div>
               <div class="conv-action">→ Stripe ne bloque pas la re-souscription d'un client qui vient de régler une facture manuelle pour le même plan. Risque de double facturation. Le client devrait uniquement pouvoir upgrader, pas souscrire à nouveau au même niveau.</div>
               <a href="https://www.loom.com/share/1558a1c6a135479a9c024c5395db39ce" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CRITIQUE</span>
+          <span class="accordion-title">Bug G — Code promo affiché en checkout mais non appliqué au prélèvement Stripe</span>
+          <span class="accordion-meta">24 juin 2026 · Morgane Eberlé</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Lors de sa première souscription Abby Start mensuel, Morgane Eberlé saisit le code SUMMERSALES (−35 % sur 3 premiers mois). Le tarif réduit s'affiche correctement dans l'interface au moment du paiement. Pourtant Stripe prélève 13,20 € — le plein tarif (11 € HT + 20 % TVA) — sans appliquer la remise. Aucun message d'erreur n'est présenté à la cliente. Le coupon est rendu visible dans l'UI mais jamais transmis à la charge Stripe.</p>
+          <div class="quote">« Bonjour je viens de payer un abonnement start mais la réduction de 35% n'a pas été appliquée. Oui c'est ma première souscription, le code était affiché avec le tarif réduit mais j'ai été prélevé de 12,20 euros. »</div>
+          <a href="https://www.loom.com/share/c6e1442ddf094982b4b677b725077310" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div style="margin-top:8px;">
+            <a href="https://dashboard.stripe.com/acct_1JADtrI21zkxZU1x/customers/cus_Ued7kRk8tOAWen" target="_blank" class="loom-link" style="background:#635bff;color:#fff;border-color:#635bff;">💳 Voir le client Stripe</a>
+          </div>
+          <div class="conv-section">
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">24 juin 2026</span></div>
+              <div class="conv-text">« Bug de souscription et remise Stripe. » — Code SUMMERSALES affiché avec le prix réduit au checkout, mais le prélèvement part au plein tarif (13,20 €). La remise est visible côté UI mais absente côté Stripe.</div>
+              <div class="conv-action">→ Le coupon est appliqué dans l'interface Abby mais n'est pas transmis à l'API Stripe au moment de la création de l'abonnement. Bug silencieux : la cliente ne reçoit aucune erreur et croit bénéficier de la promo.</div>
+              <a href="https://www.loom.com/share/c6e1442ddf094982b4b677b725077310" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+            <div class="conv-item intercom">
+              <div class="conv-meta"><span class="conv-source" style="background:#e8f4fd;color:#0055cc;border:1px solid #b3d4f0;padding:2px 6px;border-radius:10px;font-size:10px;font-weight:600;">💬 Intercom</span><span class="conv-name">Morgane Eberlé → Support Abby</span><span class="conv-date">24 juin 2026</span></div>
+              <div class="conv-text">« je viens de payer un abonnement start mais la réduction de 35% n'a pas été appliquée » → FIN confirme : 13,20 € = tarif standard mensuel Start. SLA "Manip sur compte" → <strong>MANQUÉ</strong>. Escaladé à un agent humain (Benjamin).</div>
+              <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/admin/6794798/conversation/215474832362247" target="_blank" class="conv-link">🔗 Voir la conversation Intercom</a>
             </div>
           </div>
         </div>
