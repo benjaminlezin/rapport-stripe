@@ -871,14 +871,15 @@
       <div class="accordion-item severity-moyenne">
         <div class="accordion-header" onclick="toggle(this)">
           <span class="accordion-badge badge-moyenne">🟡 MOYEN</span>
-          <span class="accordion-title">CU #2 — Downgrade annuel → mensuel créant 4 mois sans prélèvement</span>
-          <span class="accordion-meta">25 mars 2026 · Laurie Audibert</span>
+          <span class="accordion-title">CU #2 — Passage annuel → mensuel générant un grand solde créditeur et des mois sans prélèvement — 2 occurrences</span>
+          <span class="accordion-meta">25 mars 2026 · 25 juin 2026</span>
           <span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body">
-          <p class="desc">Client Start annuel (103 €) upgrade vers Pro mensuel. Stripe génère un avoir de 85 € qui couvre 4 mensualités Pro. Pendant 4 mois, 0 € prélevé.</p>
+          <p class="desc">Lorsqu'un client annuel passe en mensuel, Stripe génère un avoir correspondant aux mois non consommés sur l'annuel. Ce crédit est ensuite appliqué automatiquement aux prochaines factures, créant une période sans prélèvement. Deux occurrences documentées : (1) mars 2026 — Start annuel (103 €) → Pro mensuel, crédit 85 €, 4 mois sans prélèvement ; (2) juin 2026 — BizPro+ annuel CE renouvelé le 18 juin (1 836 € HT) → Business mensuel le 25 juin, crédit 232,94 €, soit ~5 mois sans prélèvement à 51,80 €/mois.</p>
           <div class="quote">« Ça lui crée un solde créditeur de 85 euros. Le client il a payé 103 euros, pendant 4 mois on ne le prélèvera pas. »</div>
-          <a href="https://www.loom.com/share/d3c5eb7e6b1845b0b8735d9df1f89739" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <a href="https://www.loom.com/share/d3c5eb7e6b1845b0b8735d9df1f89739" target="_blank" class="loom-link">🎥 Voir le Loom (occurrence 1)</a>
+          <a href="https://www.loom.com/share/60b8c3395c624a198e436285a18ed33f" target="_blank" class="loom-link">🎥 Voir le Loom (occurrence 2)</a>
           <div class="conv-section">
             <div class="conv-section-title">💬 Conversations source</div>
             <div class="conv-item loom">
@@ -890,6 +891,17 @@
             <div class="conv-item slack">
               <div class="conv-meta"><span class="conv-source slack">Slack DM</span><span class="conv-name">Benjamin Lézin → Rindra Da Torre</span><span class="conv-date">25 mars 2026</span></div>
               <div class="conv-text">« tant qu'on est sur le sujet Stripe, je te partage un autre cas, où in-app ça serait bien d'interdire ce genre de comportement. On permet l'upgrade annuel &gt; mensuel où ça crée un solde créditeur en faveur du client — pourquoi ne pas le "contraindre" à rester en annuel ? Et s'il veut du mensuel, il vient à nous au support pour qu'on fasse la modif si besoin. »</div>
+            </div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">25 juin 2026</span></div>
+              <div class="conv-text">« Nouveau cas similaire. Le client était sur un plan BizPro+ annuel CE, renouvelé le 18 juin pour 1 836 € HT. Le 25 juin, il est passé en Business mensuel à 51,80 €/mois. Stripe a généré une facture de 263,60 € avec un solde créditeur de 232,94 €. Ce crédit va couvrir ~5 mois de Business mensuel sans aucun prélèvement. Même cause racine que l'occurrence 1 — il faudrait bloquer in-app le passage annuel → mensuel. »</div>
+              <div class="conv-action">→ Recommandation&nbsp;: bloquer in-app le changement annuel → mensuel ; orienter le client vers le support pour toute demande de modification.</div>
+              <a href="https://www.loom.com/share/60b8c3395c624a198e436285a18ed33f" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+            <div class="conv-item intercom">
+              <div class="conv-meta"><span class="conv-source intercom">💬 Intercom</span><span class="conv-date">25 juin 2026</span></div>
+              <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/admin/6794798/conversation/215474839539878" target="_blank" class="conv-link">→ Voir la conversation Intercom</a>
+              <a href="https://dashboard.stripe.com/acct_1JADtrI21zkxZU1x/invoices/in_1Tm8yoI21zkxZU1xhFIbGMJH" target="_blank" class="conv-link">💳 Voir la facture Stripe</a>
             </div>
           </div>
         </div>
