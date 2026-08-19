@@ -448,7 +448,7 @@
   <h1>Rapport Stripe — Bugs & Difficultés</h1>
   <p>Abby Customer Care · Analyse janvier – juin 2026 · 14 vidéos Loom analysées</p>
   <div class="hero-meta">
-    <div class="hero-stat"><div class="n">10</div><div class="l">Bugs documentés</div></div>
+    <div class="hero-stat"><div class="n">11</div><div class="l">Bugs documentés</div></div>
     <div class="hero-stat"><div class="n">3</div><div class="l">Bugs critiques (cluster)</div></div>
     <div class="hero-stat"><div class="n">7</div><div class="l">Cas d'usage complexes</div></div>
     <div class="hero-stat"><div class="n">16+</div><div class="l">Actions manuelles care</div></div>
@@ -478,7 +478,7 @@
         <div class="card-label">Bugs confirmés<br>(Slack + Loom)</div>
       </div>
       <div class="card red">
-        <div class="card-n">7</div>
+        <div class="card-n">8</div>
         <div class="card-label">Bugs Loom<br>(analyses détaillées)</div>
       </div>
       <div class="card red">
@@ -829,6 +829,34 @@
               <div class="conv-meta"><span class="conv-source" style="background:#e8f4fd;color:#0055cc;border:1px solid #b3d4f0;padding:2px 6px;border-radius:10px;font-size:10px;font-weight:600;">💬 Intercom</span><span class="conv-name">Morgane Eberlé → Support Abby</span><span class="conv-date">24 juin 2026</span></div>
               <div class="conv-text">« je viens de payer un abonnement start mais la réduction de 35% n'a pas été appliquée » → FIN confirme : 12,20 € = tarif standard mensuel Start. SLA "Manip sur compte" → <strong>MANQUÉ</strong>. Escaladé à un agent humain (Benjamin).</div>
               <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/admin/6794798/conversation/215474832362247" target="_blank" class="conv-link">🔗 Voir la conversation Intercom</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-haute">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🔴 HAUTE</span>
+          <span class="accordion-title">Bug H — Résiliation Stripe pour impayé non synchronisée avec l'app Abby (accès persistant après annulation)</span>
+          <span class="accordion-meta">26 juin 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <p class="desc">Client AbiStart mensuel actif dans l'app Abby depuis le 14 avril. La facture du 14 mai n'ayant pas été réglée, Stripe annule automatiquement l'abonnement le 11 juin. Or, dans l'app Abby, le client apparaît toujours actif (plan AbiStart visible) — Benjamin ne peut même plus accéder à sa fiche. Le client a également tenté de résilier lui-même, mais la résiliation Stripe n'a pas été synchronisée côté Abby. Même famille que les Bugs C &amp; D (désync Stripe / Abby), mais déclenchée ici par l'annulation automatique Stripe pour impayé — et non par un passage en « Non Recouvrable » manuel.</p>
+          <div class="quote">« Encore un cas de figure un peu bizarre sur Stripe. »</div>
+          <a href="https://www.loom.com/share/7b7d993b2dd14415b463cac7e2ecd203" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">26 juin 2026</span></div>
+              <div class="conv-text">« Un client qui a un abonnement AbiStart actif — on voit bien le plan AbiStart dans Abby depuis le 14 avril. Sauf qu'on se rend compte que je ne peux même pas accéder à sa page. Sur son profil Stripe, la facture est bien annulée. Le 11 juin, l'abonnement AbiStart mensuel est bien annulé car le client n'a pas réglé la facture du 14 mai au 14 juin. Il a également tenté de résilier. Il n'est plus prélevé depuis le 14 mai, mais il reste actif dans l'app. »</div>
+              <div class="conv-action">→ Même cause racine que Bug C &amp; D : l'annulation Stripe (ici automatique pour impayé) n'est pas répercutée dans l'app Abby. Le client conserve un accès actif à un plan résilié.</div>
+              <a href="https://www.loom.com/share/7b7d993b2dd14415b463cac7e2ecd203" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+            <div class="conv-item intercom">
+              <div class="conv-meta"><span class="conv-source intercom">💬 Intercom</span><span class="conv-date">26 juin 2026</span></div>
+              <a href="https://app.intercom.com/a/inbox/hu6d8oic/inbox/admin/6794798/conversation/215475517968042" target="_blank" class="conv-link">→ Voir la conversation Intercom</a>
+              <a href="https://dashboard.abby.fr/clients/v2/list/?id=019c9fab-6c4b-7536-9ea8-c0bcd13d5672" target="_blank" class="conv-link">👤 Voir le profil client Abby</a>
             </div>
           </div>
         </div>
