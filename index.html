@@ -446,10 +446,10 @@
 <!-- HERO -->
 <div class="hero">
   <h1>Rapport Stripe — Bugs & Difficultés</h1>
-  <p>Abby Customer Care · Analyse janvier – juin 2026 · 14 vidéos Loom analysées</p>
+  <p>Abby Customer Care · Analyse janvier – octobre 2026 · 16 vidéos Loom analysées</p>
   <div class="hero-meta">
-    <div class="hero-stat"><div class="n">11</div><div class="l">Bugs documentés</div></div>
-    <div class="hero-stat"><div class="n">3</div><div class="l">Bugs critiques (cluster)</div></div>
+    <div class="hero-stat"><div class="n">13</div><div class="l">Bugs documentés</div></div>
+    <div class="hero-stat"><div class="n">4</div><div class="l">Bugs désync Stripe ↔ Abby</div></div>
     <div class="hero-stat"><div class="n">7</div><div class="l">Cas d'usage complexes</div></div>
     <div class="hero-stat"><div class="n">16+</div><div class="l">Actions manuelles care</div></div>
     <div class="hero-stat"><div class="n">~6h</div><div class="l">Stripe / semaine (estimé)</div></div>
@@ -478,12 +478,12 @@
         <div class="card-label">Bugs confirmés<br>(Slack + Loom)</div>
       </div>
       <div class="card red">
-        <div class="card-n">8</div>
+        <div class="card-n">10</div>
         <div class="card-label">Bugs Loom<br>(analyses détaillées)</div>
       </div>
       <div class="card red">
-        <div class="card-n">3</div>
-        <div class="card-label">Bugs dans le cluster<br>« Non Recouvrable »</div>
+        <div class="card-n">4</div>
+        <div class="card-label">Bugs dans le cluster<br>désync Stripe ↔ Abby</div>
       </div>
       <div class="card orange">
         <div class="card-n">7</div>
@@ -506,6 +506,18 @@
       </div>
     </div>
 
+    <!-- CLUSTER 2 -->
+    <div class="cluster">
+      <h3>🚨 Cluster critique — Désynchronisation Stripe ↔ App Abby</h3>
+      <p style="font-size:12px;color:#555;">Qu'elle soit manuelle (« Non Recouvrable ») ou automatique (impayé au bout de 30 jours), l'annulation d'un abonnement dans Stripe n'est pas répercutée dans l'app Abby. 4 bugs convergent : le client conserve un accès actif — voire la possibilité de payer — sur un abonnement résilié.</p>
+      <div class="cluster-items">
+        <div class="cluster-item">🔴 Paiement encore possible dans Stripe (Bug C)</div>
+        <div class="cluster-item">🔴 Facture encore payable dans l'app (Bug D)</div>
+        <div class="cluster-item">🔴 Accès persistant après annulation auto (Bug H)</div>
+        <div class="cluster-item">🔴 AbiPro « en cours » + doublon de lignes (Bug I)</div>
+      </div>
+    </div>
+
     <!-- PATTERNS -->
     <div class="patterns">
       <div class="pattern-card">
@@ -518,15 +530,23 @@
       </div>
       <div class="pattern-card">
         <h4><span class="pattern-icon icon-orange">3</span>Prorata sur factures non payées</h4>
-        <p>Bugs A, B, #3 : Stripe calcule les proratas sans vérifier si la facture précédente a été encaissée. Génère des crédits fictifs ou des doubles facturations.</p>
+        <p>Bugs A, B, J, #3 : Stripe calcule les proratas sans vérifier si la facture précédente a été encaissée. Génère des crédits fictifs ou des doubles facturations — jusqu'au double encaissement réel côté client (Bug J, oct. 2026).</p>
       </div>
       <div class="pattern-card">
         <h4><span class="pattern-icon icon-orange">4</span>Absence de garde-fous in-app</h4>
-        <p>Bug E et A : l'app Abby ne bloque pas les actions utilisateur qui entrent en conflit avec un recouvrement en cours ou un abonnement pluriannuel actif.</p>
+        <p>Bugs A, E, F, G et J : l'app Abby ne bloque pas les actions utilisateur qui entrent en conflit avec un recouvrement en cours, une facture ouverte ou un abonnement déjà actif.</p>
+      </div>
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-red">5</span>Résiliation Stripe non répercutée in-app</h4>
+        <p>Bugs C, D, H et I : qu'elle soit manuelle ou automatique (impayé à 30 jours), l'annulation Stripe laisse l'abonnement affiché « en cours » dans Abby. Perte de revenu silencieuse — jusqu'à 8 mois d'accès Pro non facturé (Bug I).</p>
+      </div>
+      <div class="pattern-card">
+        <h4><span class="pattern-icon icon-orange">6</span>Lignes d'abonnement en doublon</h4>
+        <p>Bugs I, E, A et G : un même compte peut porter plusieurs abonnements simultanés (suspendu + actif), sans arbitrage automatique ni traçabilité dans le détail des factures. Diagnostic care impossible sans reconstitution manuelle.</p>
       </div>
       <div class="pattern-card" style="grid-column: span 2;">
-        <h4><span class="pattern-icon icon-grey">5</span>Charge opérationnelle non scalable</h4>
-        <p>16+ actions manuelles, 20+ process non documentés, 10 bugs sur 6 mois. Le care absorbe seul la complexité que le produit n'a pas encodée. Estimation : 4–8h/semaine sur Stripe soit ~100–200h sur l'année.</p>
+        <h4><span class="pattern-icon icon-grey">7</span>Charge opérationnelle non scalable</h4>
+        <p>16+ actions manuelles, 20+ process non documentés, 13 bugs sur 10 mois. Le care absorbe seul la complexité que le produit n'a pas encodée. Estimation : 4–8h/semaine sur Stripe soit ~100–200h sur l'année.</p>
       </div>
     </div>
   </section>
@@ -862,6 +882,78 @@
         </div>
       </div>
 
+      <div class="accordion-item severity-critique">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-critique">🔴 CRITIQUE</span>
+          <span class="accordion-title">Bug I — Abonnement AbiPro « en cours » in-app alors qu'il est résilié sur Stripe + doublon de lignes d'abonnement</span>
+          <span class="accordion-meta">août 2026</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="meta-row">
+            <span class="meta-tag">📅 <strong>août 2026</strong></span>
+            <span class="meta-tag">🔄 <strong>Désync Stripe ↔ Abby</strong></span>
+            <span class="meta-tag">💶 <strong>0 € encaissé depuis nov. 2025</strong></span>
+          </div>
+          <p class="desc">Client souscrit en Start le 15 octobre 2025, factures d'octobre et novembre réglées sans incident. Le 14 décembre 2025, il upgrade sur Pro : cette facture n'est <strong>jamais payée</strong>. Après 30 jours de tentatives de prélèvement, Stripe bascule automatiquement l'abonnement en résilié. Or, dans l'app Abby, l'abonnement <strong>AbiPro reste affiché « en cours »</strong> — le client conserve un accès à un plan qu'il n'a jamais payé, depuis janvier 2026 (soit ~8 mois). Aggravant : le compte affiche <strong>deux lignes d'abonnement</strong> — une suspendue et une bien active — et le détail des factures ne fournit aucune information exploitable pour comprendre l'état réel du compte.</p>
+          <p class="desc">Le client est revenu vers le care non pas pour régulariser, mais pour <strong>réclamer 50 % de réduction sur sa prochaine échéance</strong>, alors qu'il n'a rien réglé depuis novembre 2025 et que sa facture AbiPro n'a jamais été honorée. La régularisation impose de recréer manuellement un abonnement AbiPro et de le refacturer.</p>
+          <div class="quote">« On a bien l'abonnement qui est ici suspendu, mais ici on a un deuxième abonnement qui lui est bien en cours. […] C'est surtout le problème d'un abonnement qui est toujours en vigueur alors que sur Stripe c'est bien résilié. »</div>
+          <ul class="bullets">
+            <li><strong>Désynchronisation</strong> : la résiliation automatique Stripe pour impayé n'est pas répercutée dans l'app Abby — même cause racine que les Bugs C, D et H</li>
+            <li><strong>Doublon</strong> : deux lignes d'abonnement coexistent (une suspendue, une active) sans qu'aucune ne reflète la réalité du paiement</li>
+            <li><strong>Perte de revenu silencieuse</strong> : ~8 mois d'accès Pro consommés sans encaissement, non détectés par le système</li>
+            <li><strong>Opacité</strong> : le détail des factures ne permet pas de diagnostiquer le compte — le care doit reconstituer l'historique manuellement</li>
+            <li><strong>Effet de bord commercial</strong> : le client sollicite une remise sur un abonnement impayé, faute de signal côté produit</li>
+          </ul>
+          <a href="https://www.loom.com/share/528680b1157a4ec89ffb19e9ef9de0b3" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">août 2026 · 2 min 03 sec</span></div>
+              <div class="conv-text">« Un utilisateur qui a aujourd'hui un abonnement AbiPro en cours, mais résilié sur Stripe. L'abonnement avait été souscrit initialement sur Start le 15 octobre 2025, bien payé le 15 octobre et le 15 novembre 2025, puis la facture du 14 décembre où il a souhaité upgrader sur Pro — cette facture n'a jamais été payée. Le process c'est qu'on fait plusieurs tentatives de paiement et au bout des 30 jours, si le règlement n'est pas passé, l'abonnement revient automatiquement en résilié, que ce soit sur Stripe ou in-app. Là en l'occurrence le client n'a jamais réglé et son abonnement est toujours en cours, avec un client qui ne paye pas depuis janvier. Ici ça a créé deux lignes : on a bien l'abonnement suspendu, mais on a un deuxième abonnement qui lui est bien en cours. Quand on va dans le détail de ces factures, je n'ai pas plus d'informations — j'ai l'impression qu'il y a plusieurs erreurs en cours sur ce client-là. Il est venu à nous parce qu'il souhaite en plus obtenir 50 % de réduction sur sa prochaine échéance, sauf qu'il ne paye plus depuis novembre 2025 et sa facture AbiPro n'a jamais été payée. L'idée ce serait de pouvoir le refacturer en remettant en place un abonnement AbiPro. »</div>
+              <div class="conv-action">→ Confirmation du cluster de désynchronisation Stripe ↔ Abby (Bugs C, D, H) : la résiliation automatique pour impayé laisse un abonnement actif in-app. Nouveauté par rapport au Bug H : création d'un <strong>doublon de lignes d'abonnement</strong> (une suspendue + une active) et absence totale de traçabilité dans le détail des factures.</div>
+              <a href="https://www.loom.com/share/528680b1157a4ec89ffb19e9ef9de0b3" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item severity-haute">
+        <div class="accordion-header" onclick="toggle(this)">
+          <span class="accordion-badge badge-haute">🔴 HAUTE</span>
+          <span class="accordion-title">Bug J — Re-souscription possible avec une facture de renouvellement en retard : prorata déduit d'une facture non payée, puis double paiement</span>
+          <span class="accordion-meta">5 oct. 2026 · AbiPro mensuel</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="meta-row">
+            <span class="meta-tag">📅 <strong>2 sept. → 5 oct. 2026</strong></span>
+            <span class="meta-tag">💶 <strong>16,10 € payés pour 14,82 € dus</strong></span>
+            <span class="meta-tag">🔁 <strong>13,54 € de prorata fantôme</strong></span>
+          </div>
+          <p class="desc">Le client souscrit un abonnement <strong>AbiPro mensuel le 2 septembre</strong>. Le <strong>2 octobre à 19h33</strong>, la facture de renouvellement de <strong>14,82 €</strong> est émise — mais le prélèvement échoue et la facture reste <strong>en retard</strong>. Le <strong>5 octobre à 11h59</strong>, le client, voyant sa facture impayée, reprend de lui-même un abonnement AbiPro mensuel depuis l'app. Stripe accepte cette nouvelle souscription <strong>sans vérifier qu'une facture est en cours et en retard</strong>, et calcule un prorata en <strong>déduisant 13,54 € de la facture du 2 octobre qui n'a jamais été réglée</strong> : le client ne paie que <strong>1,28 €</strong> (facturé à 11h59, réglé à 12h02).</p>
+          <p class="desc">Le même jour à <strong>19h34</strong>, la facture du 2 octobre de 14,82 € finit par être encaissée. Résultat : le client a réglé <strong>deux fois le même mois d'abonnement</strong> (1,28 € + 14,82 € = 16,10 €), le crédit de prorata ayant été accordé sur une facture qui a ensuite été payée. Même famille que le <strong>Bug B</strong> (prorata calculé sur une facture de renouvellement ouverte) et que les <strong>Bugs F &amp; G</strong> (re-souscription au même plan non bloquée), mais avec ici un <strong>préjudice financier réel pour le client</strong>.</p>
+          <div class="quote">« Sur Stripe, tu peux acheter un nouvel abonnement alors qu'il y a une facture qui est en cours et en l'occurrence qui était en retard… Du coup le client, il a payé à tort en octobre. »</div>
+          <ul class="bullets">
+            <li><strong>Aucun garde-fou</strong> : Stripe (et l'app Abby) autorisent une nouvelle souscription au même plan alors qu'une facture de renouvellement est ouverte / en retard</li>
+            <li><strong>Prorata sur impayé</strong> : les 13,54 € déduits proviennent d'une facture non encaissée au moment du calcul — le crédit n'aurait pas dû exister</li>
+            <li><strong>Double encaissement</strong> : l'ancienne facture étant payée quelques heures plus tard, le client règle deux fois la même période</li>
+            <li><strong>Détection impossible sans audit</strong> : il faut repartir des <em>dates d'émission</em> des factures (et non des dates de paiement) pour reconstituer la chronologie</li>
+            <li><strong>Régularisation manuelle</strong> : remboursement ou avoir à produire par le care, non automatisé</li>
+          </ul>
+          <a href="https://www.loom.com/share/f912672de262458984f02cd6678765c1" target="_blank" class="loom-link">🎥 Voir le Loom</a>
+          <div class="conv-section">
+            <div class="conv-section-title">💬 Conversations source</div>
+            <div class="conv-item loom">
+              <div class="conv-meta"><span class="conv-source loom">🎥 Loom</span><span class="conv-name">Benjamin Lézin</span><span class="conv-date">oct. 2026 · 2 min 50 sec · « Problème de factures Stripe et abonnements »</span></div>
+              <div class="conv-text">« Il faut toujours partir des factures émises — c'est la date à laquelle la facture a bien été émise. Le client a souscrit un abonnement le 2 septembre, le 2 octobre ce même abonnement a été renouvelé (AbiPro mensuel au vu du montant), et le 5 octobre il a décidé de reprendre un abonnement mensuel. En effet il y a un problème : la facture du 2 octobre, émise à 19h33 pour 14,82 €, n'a été payée que le 5 octobre à 19h34. Sauf que le 5 octobre à 11h59, le client s'est dit "la facture précédente est en retard, je vais reprendre un abonnement AbiPro mensuel" — où ont été déduits 13,54 € d'une facture qui n'avait pas été réglée. Les 1,28 € restants ont été facturés à 11h59 et réglés à 12h02. Elle est là la problématique : sur Stripe tu peux acheter un nouvel abonnement alors qu'il y a une facture en cours, et en l'occurrence en retard. Du coup le client a payé à tort en octobre. »</div>
+              <div class="conv-action">→ Garde-fou à poser côté produit : bloquer toute nouvelle souscription au même plan tant qu'une facture de renouvellement est <strong>ouverte ou en retard</strong>, et ne jamais calculer de prorata à partir d'une facture non encaissée. Recoupe la recommandation n°2 du rapport (upgrade/souscription conditionnés au paiement effectif de la facture courante).</div>
+              <a href="https://www.loom.com/share/f912672de262458984f02cd6678765c1" target="_blank" class="conv-link">🎥 Voir le Loom complet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1151,14 +1243,23 @@
       <div class="reco-item">
         <div class="reco-n">2</div>
         <div class="reco-content">
+          <h4>Synchroniser la résiliation Stripe (manuelle et automatique) avec l'app Abby</h4>
+          <p>Répercuter en temps réel toute annulation Stripe sur le statut d'abonnement in-app · Couper l'accès au plan dès résiliation · Interdire les lignes d'abonnement en doublon sur un même compte · 4 bugs corrigés d'un coup (C, D, H, I)</p>
+        </div>
+        <span class="reco-tag tag-critique">🔴 CRITIQUE</span>
+      </div>
+
+      <div class="reco-item">
+        <div class="reco-n">3</div>
+        <div class="reco-content">
           <h4>Bloquer l'activation d'un plan supérieur sans paiement validé</h4>
-          <p>Imposer un contrôle Stripe : upgrade uniquement si la facture courante est payée · Bloquer la souscription si un abonnement actif existe déjà</p>
+          <p>Imposer un contrôle Stripe : upgrade uniquement si la facture courante est payée · Bloquer la souscription si un abonnement actif existe déjà ou si une facture de renouvellement est ouverte / en retard (Bug J) · Ne jamais calculer de prorata à partir d'une facture non encaissée</p>
         </div>
         <span class="reco-tag tag-sprint">Sprint 1</span>
       </div>
 
       <div class="reco-item">
-        <div class="reco-n">3</div>
+        <div class="reco-n">4</div>
         <div class="reco-content">
           <h4>Bloquer le downgrade de fréquence annuel → mensuel in-app</h4>
           <p>Empêcher la réduction de fréquence en self-service pour éviter la génération de crédits involontaires · Orienter vers le care</p>
@@ -1167,7 +1268,7 @@
       </div>
 
       <div class="reco-item">
-        <div class="reco-n">4</div>
+        <div class="reco-n">5</div>
         <div class="reco-content">
           <h4>Aligner l'IA FIN sur les process Stripe réels</h4>
           <p>Mettre à jour la base de connaissance : délai réel de remboursement, conditions de résiliation · Éviter de nouveaux avis négatifs</p>
@@ -1176,10 +1277,10 @@
       </div>
 
       <div class="reco-item">
-        <div class="reco-n">5</div>
+        <div class="reco-n">6</div>
         <div class="reco-content">
           <h4>Documenter les 13 process prioritaires Stripe</h4>
-          <p>Transformer les 14 Looms en SOPs Notion · Priorité : renew avec promo, upgrade/downgrade, remboursement, changement fréquence · Délai : 1 sprint</p>
+          <p>Transformer les 15 Looms en SOPs Notion · Priorité : renew avec promo, upgrade/downgrade, remboursement, changement fréquence · Délai : 1 sprint</p>
         </div>
         <span class="reco-tag tag-doc">📋 Doc</span>
       </div>
@@ -1189,7 +1290,7 @@
 
 </main>
 
-<footer>Rapport Stripe — Bugs &amp; Difficultés 2026 · Abby Customer Care · Benjamin Lézin &amp; Rindra Da Torre · Basé sur 14 transcripts Loom + analyse Slack</footer>
+<footer>Rapport Stripe — Bugs &amp; Difficultés 2026 · Abby Customer Care · Benjamin Lézin &amp; Rindra Da Torre · Basé sur 16 transcripts Loom + analyse Slack · Mis à jour le 9 octobre 2026</footer>
 
 <script>
   function toggle(header) {
